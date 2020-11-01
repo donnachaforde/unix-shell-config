@@ -34,6 +34,13 @@ else
 fi
 
 echo "Logged on '"$HOSTNAME"' as '"$USERID"' - Operating System is '"$OS"'"
+echo
+# show the OS type in a banner if the cmd is available
+if test -f /usr/bin/banner
+then
+	banner $OS
+fi
+echo
 
 
 
