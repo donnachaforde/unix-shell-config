@@ -27,6 +27,16 @@ HOSTNAME=${HOSTNAME:-`hostname`}
 USERID=${USERID:-`logname`}
 WHOAMI=${WHOAMI:-`whoami`}
 
+UNAME="$(uname -s)"
+case "${UNAME}" in
+    Linux*)     MACHINE=Linux;;
+    Darwin*)    MACHINE=Mac;;
+    CYGWIN*)    MACHINE=Cygwin;;
+    MINGW*)     MACHINE=MinGw;;
+    *)          MACHINE="UNKNOWN:${UNAME}"
+esac
+
+
 if test "$OS" = "Windows_NT"
 then
 	WHOAMI=${WHOAMI:-`/bin/whoami`}
@@ -53,7 +63,8 @@ then
 	WHOAMI=${WHOAMI:-`/usr/bin/whoami`}
 fi
 
-echo "Logged on '"$HOSTNAME"' as '"$USERID"' - Operating System is '"$OS"'"
+
+echo "Logged on as "$USERID" on "$HOSTNAME" running "$MACHINE" on "$OS""
 echo
 # show the OS type in a banner if the cmd is available
 if test -f /usr/bin/banner
@@ -171,20 +182,27 @@ export PATH
 # Java environment
 #
 
-# C: drive on CygWin - /opt on Unix
+# some variation with how local drives are reference between Cygwin, MinGW
 if test "$OS" = "Windows_NT"
 then
-	#JDK_HOME=C:\\views\\opt\\jdk-14.0.1; export JDK_HOME
-	JDK_HOME=/cygdrive/c/views/opt/jdk-14.0.1; export JDK_HOME
-	JAVA_HOME=$JDK_HOME; export JAVA_HOME
-else 
-	JDK_HOME=/opt/java; export JDK_HOME
-	JAVA_HOME=/opt/java; export JAVA_HOME
-fi
-# not always used
-#JAVA_DIR=$JDK_HOME; export JAVA_DIR
-#JDK_DIR=$JDK_HOME; export JDK_DIR
+	# default on MinGW
+	JDK_HOME=/c/views/opt/jdk-14.0.1; export JDK_HOME
 
+	# augment if on Cygwin
+	if test "$MACHINE" = "Cygwin"
+	then
+		JDK_HOME=/cygdrive/$JDK_HOME
+	fi
+else 
+	# Linux, MacOS plus Unix (AIX, HP-UX, Solaris)
+	JDK_HOME=/opt/java; export JDK_HOME
+fi
+JAVA_HOME=$JDK_HOME; export JAVA_HOME
+
+
+# add java to the path
+PATH=$PATH:$JAVA_HOME/bin
+export PATH
 
 
 if test "$JAVA_OPTS" = ""
@@ -197,23 +215,18 @@ then
 	CLASSPATH=; export CLASSPATH
 fi
 
-# add java to the path
-PATH=$PATH:$JAVA_HOME/bin
-export PATH
-
-
 
 #--------------------------------------------------------------------------
-# external settings
-#
-
 # source X display
+
 if test -f ~/.bashrc.display
 then
 	. ~/.bashrc.display
 fi
 
+#--------------------------------------------------------------------------
 # source aliases
+
 if test -f ~/.bashrc.alias
 then
 	. ~/.bashrc.alias
@@ -221,28 +234,23 @@ fi
 echo
 
 
-
 #--------------------------------------------------------------------------
 # display shell version 
 #
 
-# bash elsewhere on windows
-if test "$OS" = "Windows_NT"
+
+if test -f /bin/bash
 then
-	if test -f /bin/bash
+	echo 
+	/bin/bash --version
+	echo
+else 
+	if test -f /usr/local/bin/bash
 	then
 		echo 
 		/bin/bash --version
 		echo
 	fi
-fi
-
-
-if test -f /usr/local/bin/bash
-then
-	echo 
-	/usr/local/bin/bash --version
-	echo
 fi
 
 
