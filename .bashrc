@@ -25,12 +25,32 @@ echo
 OS=${OS:-`uname`}
 HOSTNAME=${HOSTNAME:-`hostname`}
 USERID=${USERID:-`logname`}
+WHOAMI=${WHOAMI:-`whoami`}
 
 if test "$OS" = "Windows_NT"
 then
 	WHOAMI=${WHOAMI:-`/bin/whoami`}
-else
+fi
+
+if test "$OS" = "SunOS"
+then
 	WHOAMI=${WHOAMI:-`/usr/ucb/whoami`}
+fi
+
+if test "$OS" = "AIX"
+then
+	WHOAMI=${WHOAMI:-`/usr/ucb/whoami`}
+fi
+
+if test "$OS" = "HP-UX"
+then
+	WHOAMI=${WHOAMI:-`/usr/ucb/whoami`}
+fi
+
+# cater for MacOS
+if test "$OS" = "Darwin"
+then
+	WHOAMI=${WHOAMI:-`/usr/bin/whoami`}
 fi
 
 echo "Logged on '"$HOSTNAME"' as '"$USERID"' - Operating System is '"$OS"'"
@@ -38,7 +58,10 @@ echo
 # show the OS type in a banner if the cmd is available
 if test -f /usr/bin/banner
 then
-	banner $OS
+	if test "$OS" != "Darwin"
+	then
+		banner $OS
+	fi
 fi
 
 #--------------------------------------------------------------------------
