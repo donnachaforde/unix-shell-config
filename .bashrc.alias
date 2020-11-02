@@ -1,0 +1,51 @@
+#--------------------------------------------------------------------------
+#
+# ~/.bashrc.alias (sourced by ~/.bashrc and ~./kshrc)
+#
+# Developed by Donnacha Forde (donnacha.forde@gmail.com)
+#
+# Copyright © 2001 - 2006, Donnacha Forde. All rights reserved.
+#
+# This software is provided 'as is' without warranty, expressed or implied.
+# Donnacha Forde accepts no responsibility for its use or reliability.
+#
+#--------------------------------------------------------------------------
+
+# env
+alias h=history
+alias path='echo $PATH'
+alias ls='ls -F'
+#alias rm="rm-i"                # for the safety conscious
+#alias psx='ps -ael -o pid=PID -o args=PROCESS -o pcpu=CPU% -o cpu=CPU -o etime=ELAPSED -o vsz=VMEM -o rss=RES -o pmem=MEM%  -o pri=PRI'
+alias psx='ps -ael -o pid=PID -o args=PROCESS -o pcpu=CPU% -o etime=ELAPSED -o vsz=VMEM -o rss=RES -o pmem=MEM%  -o pri=PRI'
+
+
+# tools
+alias snav=snavigator
+alias tn=telnet
+
+
+# xterm short-cuts - provide fore-ground colour - e.g. -fg green
+alias xt=xterm
+alias xtx="xterm -sb -sl 999 -bg black -fn arial "
+alias xwin="xterm -sb -sl 999 -fg white -bg black -fn arial "
+
+
+# dos commands
+alias cls=clear
+alias md=mkdir
+alias rd=rmdir
+if test "$OS" = "Windows_NT"
+then
+	# mks env only
+	alias dir='cmd.exe /c dir'
+	alias del='cmd.exe /c del'
+fi
+
+
+# navigation (catering for typos)
+alias cd..='cd ..'
+alias cd.='cd .'
+alias cd-='cd -'
+
+
