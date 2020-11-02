@@ -11,7 +11,7 @@
 #
 #--------------------------------------------------------------------------
 
-echo "Sourcing aliases from ~/.bashrc.alias"
+echo "Sourcing X display settings from ~/.bashrc.display"
 
 # set $DISPLAY to your display terminal
 DISPLAY=0.0.0.0:0.0
