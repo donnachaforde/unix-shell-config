@@ -11,6 +11,7 @@
 #
 #--------------------------------------------------------------------------
 
+echo "Sourcing aliases from ~/.bashrc.alias"
 
 # env
 alias h=history	
