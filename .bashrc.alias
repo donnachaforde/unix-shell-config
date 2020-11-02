@@ -15,8 +15,8 @@
 # env
 alias h=history	
 alias path='echo $PATH'
-alias ls='ls -F'
-alias ll='ls -al --color'
+alias ls='ls -F --color=auto'
+alias ll='ls -al'
 #alias rm="rm-i"                # for the safety conscious
 #alias psx='ps -ael -o pid=PID -o args=PROCESS -o pcpu=CPU% -o cpu=CPU -o etime=ELAPSED -o vsz=VMEM -o rss=RES -o pmem=MEM%  -o pri=PRI'
 #alias psx='ps -ael -o pid=PID -o args=PROCESS -o pcpu=CPU% -o etime=ELAPSED -o vsz=VMEM -o rss=RES -o pmem=MEM%  -o pri=PRI'
