@@ -1,0 +1,6 @@
+# ~/.bashrc.display (sourced by ~/.bashrc)
+
+# set $DISPLAY to your display terminal
+DISPLAY=0.0.0.0:0.0
+export DISPLAY
+
