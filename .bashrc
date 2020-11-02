@@ -19,7 +19,7 @@ echo
 
 
 #--------------------------------------------------------------------------
-# determine platform, user and hostname
+# determine platform, user and hostname and type of machine/environment
 #
 
 OS=${OS:-`uname`}
@@ -64,9 +64,10 @@ then
 fi
 
 
-echo "Logged on as "$USERID" on "$HOSTNAME" running "$MACHINE" on "$OS""
+echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
-# show the OS type in a banner if the cmd is available
+
+# show the OS type in a banner if the cmd is available (skip for mac as is sideways)
 if test -f /usr/bin/banner
 then
 	if test "$OS" != "Darwin"
@@ -74,6 +75,7 @@ then
 		banner $OS
 	fi
 fi
+
 
 #--------------------------------------------------------------------------
 # prompt & window title
@@ -237,7 +239,6 @@ echo
 #--------------------------------------------------------------------------
 # display shell version 
 #
-
 
 if test -f /bin/bash
 then
