@@ -109,5 +109,15 @@ then
 fi
 
 
+#--------------------------------------------------------------------------
+# environment settings
+#
+
+# console colours - CygWin
+if test "$OS" = "Windows_NT"
+then
+	eval `dircolors -b /etc/DIR_COLORS`
+	alias ls='ls --color=auto'		# must alias ls to see the colours
+fi
 
 
