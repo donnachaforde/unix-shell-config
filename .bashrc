@@ -166,3 +166,37 @@ else
 fi
 export PATH
 
+
+#--------------------------------------------------------------------------
+# Java environment
+#
+
+# C: drive on CygWin - /opt on Unix
+if test "$OS" = "Windows_NT"
+then
+	#JDK_HOME=C:\\views\\opt\\jdk-14.0.1; export JDK_HOME
+	JDK_HOME=/cygdrive/c/views/opt/jdk-14.0.1; export JDK_HOME
+	JAVA_HOME=$JDK_HOME; export JAVA_HOME
+else 
+	JDK_HOME=/opt/java; export JDK_HOME
+	JAVA_HOME=/opt/java; export JAVA_HOME
+fi
+# not always used
+#JAVA_DIR=$JDK_HOME; export JAVA_DIR
+#JDK_DIR=$JDK_HOME; export JDK_DIR
+
+
+
+if test "$JAVA_OPTS" = ""
+then
+	JAVA_OPTS=; export JAVA_OPTS
+fi
+
+if test "$CLASSPATH" = ""
+then
+	CLASSPATH=; export CLASSPATH
+fi
+
+# add java to the path
+PATH=$PATH:$JAVA_HOME/bin
+export PATH
