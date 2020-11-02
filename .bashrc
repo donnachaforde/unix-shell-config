@@ -200,3 +200,24 @@ fi
 # add java to the path
 PATH=$PATH:$JAVA_HOME/bin
 export PATH
+
+
+
+#--------------------------------------------------------------------------
+# external settings
+#
+
+# source X display
+if test -f ~/.bashrc.display
+then
+	. ~/.bashrc.display
+fi
+
+# source aliases
+if test -f ~/.bashrc.alias
+then
+	. ~/.bashrc.alias
+fi
+
+
+
