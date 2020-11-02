@@ -221,3 +221,33 @@ fi
 
 
 
+#--------------------------------------------------------------------------
+# display shell version 
+#
+
+# bash elsewhere on windows
+if test "$OS" = "Windows_NT"
+then
+	if test -f /bin/bash
+	then
+		echo 
+		/bin/bash --version
+		echo
+	fi
+fi
+
+
+if test -f /usr/local/bin/bash
+then
+	echo 
+	/usr/local/bin/bash --version
+	echo
+fi
+
+
+#--------------------------------------------------------------------------
+# display date & time 
+#
+
+date
+echo
