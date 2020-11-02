@@ -218,6 +218,7 @@ if test -f ~/.bashrc.alias
 then
 	. ~/.bashrc.alias
 fi
+echo
 
 
 
