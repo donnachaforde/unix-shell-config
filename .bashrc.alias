@@ -27,9 +27,27 @@ else
 	alias ls='ls -F --color=auto'
 fi
 
+# shortcut ls
 alias ll='ls -al'
+alias la='ls -A'
 
-#alias rm="rm-i"                # for the safety conscious
+# bring colour to grep
+alias grep='grep --color'                     
+alias egrep='egrep --color=auto'              
+alias fgrep='fgrep --color=auto'              
+
+
+# use disk utils with human readable output by default
+alias df='df -h'
+alias du='du -h'
+
+# interactive mode for the safety conscious
+#alias rm='rm-i'
+#alias cp='cp -i'
+#alias mv='mv -i'
+
+
+# remember useful options on ps 
 #alias psx='ps -ael -o pid=PID -o args=PROCESS -o pcpu=CPU% -o cpu=CPU -o etime=ELAPSED -o vsz=VMEM -o rss=RES -o pmem=MEM%  -o pri=PRI'
 #alias psx='ps -ael -o pid=PID -o args=PROCESS -o pcpu=CPU% -o etime=ELAPSED -o vsz=VMEM -o rss=RES -o pmem=MEM%  -o pri=PRI'
 
