@@ -249,7 +249,7 @@ else
 	if test -f /usr/local/bin/bash
 	then
 		echo 
-		/bin/bash --version
+		/usr/local/bin/bash --version
 		echo
 	fi
 fi
