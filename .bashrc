@@ -67,7 +67,7 @@ fi
 echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
 
-# show the OS type in a banner if the cmd is available (skip for mac as is sideways)
+# show the OS type in a banner if the cmd is available (skip for mac as is displays it on its side)
 if test -f /usr/bin/banner
 then
 	if test "$OS" != "Darwin"
