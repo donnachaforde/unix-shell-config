@@ -163,6 +163,13 @@ then
 	export PATH
 fi
 
+# add windows commands
+if test "$OS" = "Windows_NT"
+then
+	PATH=$PATH:/c/Windows/system32
+	export PATH
+fi
+
 # ensure we can launch VS Code from command-line
 if test "$OS" = "Windows_NT"
 then
