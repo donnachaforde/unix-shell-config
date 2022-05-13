@@ -5,7 +5,7 @@
 #
 # Developed by Donnacha Forde (donnacha.forde@gmail.com)
 #
-# Copyright © 2001 - 2020 Donnacha Forde. All rights reserved.
+# Copyright Â© 2001 - 2022 Donnacha Forde. All rights reserved.
 #
 # This software is provided 'as is' without warranty, expressed or implied.
 # Donnacha Forde accepts no responsibility for its use or reliability.
@@ -81,23 +81,29 @@ fi
 # prompt & window title
 #
 
-# Different bash implementations have different setting syntax
+# Different bash implementations have different setting syntax sp we adjust by platform, etc.
 #
-# cygwin is not an xterm so it doesn't support 'title' 
+# - cygwin is not an xterm so it doesn't support 'title' 
 #
-# AIX bash does not support the syntax used on SunOS and HP-UX
-# (setting title & prompt settings creates duplicate prompt)
+# - AIX bash does not support the syntax used on SunOS and HP-UX
+#   (setting title & prompt settings creates duplicate prompt)
 #
-# The default is plain text = userid@host ~$ 
+# - The default is plain text = userid@host ~$ 
 #
 
-# start with simple prompt
-PS1="\u@\h \w$ "	
+# start with simple prompt - uncomment to activate
+# PS1="\u@\h \w$ "	
 
-# next we change it according to platform (i.e. add colour and title)
-if test "$OS" = "Windows_NT"
+
+# Git Bash prompt on Windows is good enough so only uncomment if really necessary
+# if test "$OS" = "Windows_NT"
+# then
+# 	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
+# fi
+
+if test "$MACHINE" = "Cygwin"
 then
-	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
+ 	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 fi
 
 if test "$OS" = "AIX"			
@@ -126,12 +132,20 @@ fi
 # environment settings
 #
 
-# console colours - CygWin
-if test "$OS" = "Windows_NT"
+# console colours - extra step needed for CygWin but Git Bash default is good enough
+
+# augment if on Cygwin
+if test "$MACHINE" = "Cygwin"
 then
 	eval `dircolors -b /etc/DIR_COLORS`
-	alias ls='ls --color=auto'		# must alias ls to see the colours
 fi
+
+if test "$OS" = "Windows_NT"
+then
+	# alias 'ls' to ensure we see the colours	
+	alias ls='ls --color=auto'		
+fi
+
 
 
 #--------------------------------------------------------------------------
@@ -141,6 +155,21 @@ fi
 # binaries
 PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
 export PATH
+
+# add git and other commands on Windows
+if test "$OS" = "Windows_NT"
+then
+	PATH=$PATH:/mingw64/bin
+	export PATH
+fi
+
+# ensure we can launch VS Code from command-line
+if test "$OS" = "Windows_NT"
+then
+	PATH=$PATH:~/AppData/Local/Programs/Microsoft\ VS\ Code/bin
+	export PATH
+fi
+
 
 
 # library path (Note:  The environment variable is different on Solaris.)
@@ -226,6 +255,7 @@ then
 	. ~/.bashrc.display
 fi
 
+
 #--------------------------------------------------------------------------
 # source aliases
 
@@ -237,7 +267,7 @@ echo
 
 
 #--------------------------------------------------------------------------
-# display shell version 
+# Lastly, display shell version, date & time
 #
 
 if test -f /bin/bash
@@ -253,11 +283,6 @@ else
 		echo
 	fi
 fi
-
-
-#--------------------------------------------------------------------------
-# display date & time 
-#
 
 date
 echo
