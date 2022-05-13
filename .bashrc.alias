@@ -4,7 +4,7 @@
 #
 # Developed by Donnacha Forde (donnacha.forde@gmail.com)
 #
-# Copyright © 2001 - 2020 Donnacha Forde. All rights reserved.
+# Copyright ï¿½ 2001 - 2022 Donnacha Forde. All rights reserved.
 #
 # This software is provided 'as is' without warranty, expressed or implied.
 # Donnacha Forde accepts no responsibility for its use or reliability.
@@ -78,3 +78,12 @@ fi
 alias cd..='cd ..'
 alias cd.='cd .'
 alias cd-='cd -'
+
+
+# git shortcuts
+alias gs='git status'
+alias gd='git diff --name-only --cached'
+alias gl='git log --oneline'
+alias gc='git commit'
+alias ga='git add'
+
