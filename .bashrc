@@ -81,7 +81,7 @@ fi
 # prompt & window title
 #
 
-# Different bash implementations have different setting syntax sp we adjust by platform, etc.
+# Different bash implementations have different setting syntax so we adjust by platform, etc.
 #
 # - cygwin is not an xterm so it doesn't support 'title' 
 #
@@ -152,34 +152,81 @@ fi
 # path settings
 #
 
-# binaries
-PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
-export PATH
-
-# add git and other commands on Windows
+# OpenSSH env
 if test "$OS" = "Windows_NT"
 then
-	PATH=$PATH:/mingw64/bin
+	OPENSSH_HOME=/c/Windows/System32/OpenSSH
+	export OPENSSH_HOME
+fi
+
+# add common UNIX/Linux paths 
+if test "$OS" = "Windows_NT"
+then
+	# show precedence to OpenSSH
+	PATH=.:$OPENSSH_HOME:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
+	export PATH
+else
+	PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
 	export PATH
 fi
 
-# add windows commands
-if test "$OS" = "Windows_NT"
-then
-	PATH=$PATH:/c/Windows/system32
-	export PATH
-fi
 
-# ensure we can launch VS Code from command-line
+# add extra paths for Windows
 if test "$OS" = "Windows_NT"
 then
+
+	OPT_HOME=c/views/opt
+	export OPT_HOME
+
+	# additional windows commands
+	PATH=$PATH:/c/Windows:/c/Windows/system32
+	export PATH
+
+	# sysinternal commands
+	PATH=$PATH:$OPT_HOME/sysinternalssuite
+	export PATH
+	
+	# ninja
+	PATH=$PATH:$OPT_HOME/ninja
+	export PATH
+	
+	# nasm
+	PATH=$PATH:$OPT_HOME/nasm
+	export PATH
+
+	# launch vs code from command line
 	PATH=$PATH:~/AppData/Local/Programs/Microsoft\ VS\ Code/bin
 	export PATH
+
+	# add VS tools (like dumpbin.exe) 
+	VS_HOME=/c/Program\ Files/Microsoft\ Visual\ Studio/2022/Professional
+	export VS_HOME; 
+	PATH=$PATH:$VS_HOME/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64
+	export PATH	
+
+	# add cmake tools
+	PATH=$PATH:/c/Program\ Files/CMake/bin
+	export PATH
+
+	# add other unix binaries to the cmd line (sourced from msys/mingw)
+	PATH=$PATH:$OPT_HOME/msys64/usr/bin:$OPT_HOME/msys64/mingw64/bin
+	export PATH	
+
+	# add PERL location for MinGW
+	PATH=$PATH:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+	export PATH	
+
+	# gRPC - installed from build
+	PATH=$PATH:~/.local/bin
+	export PATH		
+
 fi
 
+#--------------------------------------------------------------------------
+# library path 
+#
 
-
-# library path (Note:  The environment variable is different on Solaris.)
+# Note: The library environment variable is different on Solaris.
 if test "$OS" = "SunOS"
 then
 	LD_LIBRARY_PATH=.:/lib:/usr/lib:/usr/local/lib:/usr/ccs/lib:/usr/ucblib
@@ -189,7 +236,10 @@ else
 	export LIBPATH
 fi
 
+
+#--------------------------------------------------------------------------
 # man path 
+#
 MANPATH=/usr/local/man:/usr/share/man:/usr/openwin/man:/usr/dt/man
 export MANPATH
 
@@ -217,6 +267,24 @@ export PATH
 
 
 #--------------------------------------------------------------------------
+# Git environment
+#
+
+GIT_HOME=/c/Program\ Files/Git
+export GIT_HOME
+
+PATH=$PATH:$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin
+export PATH
+
+# prefer to use OpenSSH
+if test "$OS" = "Windows_NT"
+then
+	GIT_SSH=$OPENSSH_HOME/ssh.exe	
+	export GIT_SSH
+fi
+
+
+#--------------------------------------------------------------------------
 # Java environment
 #
 
@@ -224,7 +292,7 @@ export PATH
 if test "$OS" = "Windows_NT"
 then
 	# default on MinGW
-	JDK_HOME=/c/views/opt/jdk-14.0.1; export JDK_HOME
+	JDK_HOME=/c/views/opt/AdoptJDK-11.0.13.8; export JDK_HOME
 
 	# augment if on Cygwin
 	if test "$MACHINE" = "Cygwin"
@@ -232,8 +300,8 @@ then
 		JDK_HOME=/cygdrive/$JDK_HOME
 	fi
 else 
-	# Linux, MacOS plus Unix (AIX, HP-UX, Solaris)
-	JDK_HOME=/opt/java; export JDK_HOME
+	# assume UNIX/Linux-like environment
+	JDK_HOME=/opt/java; export JDK_HOME	
 fi
 JAVA_HOME=$JDK_HOME; export JAVA_HOME
 
@@ -242,15 +310,36 @@ JAVA_HOME=$JDK_HOME; export JAVA_HOME
 PATH=$PATH:$JAVA_HOME/bin
 export PATH
 
-
+# add optional settings
 if test "$JAVA_OPTS" = ""
 then
 	JAVA_OPTS=; export JAVA_OPTS
 fi
 
+# we may need to add to the classpath
 if test "$CLASSPATH" = ""
 then
 	CLASSPATH=; export CLASSPATH
+fi
+
+
+#--------------------------------------------------------------------------
+# Maven 
+#
+
+if test "$OS" = "Windows_NT"
+then
+	MVN_HOME=/c/views/opt/apache-maven-3.8.4; export MVN_HOME
+fi
+
+# add maven to the path
+PATH=$PATH:$MVN_HOME/bin
+export PATH
+
+# define MVN_OPTS
+if test "$MVN_OPTS" = ""
+then
+	MVN_OPTS=; export MVN_OPTS
 fi
 
 
@@ -274,7 +363,7 @@ echo
 
 
 #--------------------------------------------------------------------------
-# Lastly, display shell version, date & time
+# Display shell version, date & time
 #
 
 if test -f /bin/bash
