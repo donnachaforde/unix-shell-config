@@ -86,4 +86,5 @@ alias gd='git diff --name-only --cached'
 alias gl='git log --oneline'
 alias gc='git commit'
 alias ga='git add'
-
+alias gf='git fetch'
+alias gsc='git log origin/main..HEAD --oneline'
