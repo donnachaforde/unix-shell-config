@@ -225,10 +225,10 @@ then
 	PATH=$PATH:~/AppData/Local/Programs/Microsoft\ VS\ Code/bin
 	export PATH
 
-	# add VS tools (like dumpbin.exe) 
+	# add VS dev VS tools (like dumpbin.exe) 
 	VS_HOME=/c/Program\ Files/Microsoft\ Visual\ Studio/2022/Professional
 	export VS_HOME; 
-	PATH=$PATH:$VS_HOME/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64
+	PATH=$PATH:$VS_HOME/Common7/IDE:$VS_HOME/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64
 	export PATH	
 
 	# add cmake tools
@@ -244,7 +244,7 @@ then
 	export PATH	
 
 	# gRPC - installed from build
-	PATH=$PATH:~/.local/bin
+	PATH=$PATH:$OPT_HOME/grpc/bin
 	export PATH		
 
 	# cygwin - we can optional add extra paths to cygwin executables (but may require some care...)
@@ -252,6 +252,11 @@ then
 	export CYGWIN_HOME
 	#PATH=$PATH:$CYGWIN_HOME/bin:$CYGWIN_HOME/sbin:$CYGWIN_HOME/usr:$CYGWIN_HOME:/usr/sbin
 	#export PATH
+
+	# add go-lang
+	PATH=$PATH:/c/Program\ Files/Go/bin
+	export PATH
+
 
 fi
 
