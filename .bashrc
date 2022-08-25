@@ -64,6 +64,23 @@ then
 fi
 
 
+#--------------------------------------------------------------------------
+# home settings
+#
+
+# On Windows, tending to work in a separate directory on the root drive (i.e. not in C:\Users\<username>)
+if test "$OS" = "Windows_NT"
+then
+	OPT_HOME=/c/views/opt; export OPT_HOME
+else
+	OPT_HOME=/opt; export OPT_HOME
+fi
+
+
+#--------------------------------------------------------------------------
+# display details of the current host
+#
+
 echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
 
@@ -74,7 +91,18 @@ then
 	then
 		banner $OS
 	fi
+else
+	# if cygwin is installed and the optional banner command is present, we can invoke that banner (even from Git-Bash)
+	if test -d $OPT_HOME/cygwin64
+	then
+		if test -f $OPT_HOME/cygwin64/bin/banner
+		then
+			$OPT_HOME/cygwin64/bin/banner Windows
+		fi
+	fi
 fi
+
+
 
 
 #--------------------------------------------------------------------------
@@ -91,11 +119,14 @@ fi
 # - The default is plain text = userid@host ~$ 
 #
 
-# start with simple prompt - uncomment to activate
-# PS1="\u@\h \w$ "	
+# Git Bash prompt on Windows is good enough so only uncomment block below if really necessary
 
+# start with simple prompt
+if test "$OS" != "Windows_NT"
+then
+	PS1="\u@\h \w$ "	
+fi
 
-# Git Bash prompt on Windows is good enough so only uncomment if really necessary
 # if test "$OS" = "Windows_NT"
 # then
 # 	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
@@ -174,10 +205,6 @@ fi
 # add extra paths for Windows
 if test "$OS" = "Windows_NT"
 then
-
-	OPT_HOME=c/views/opt
-	export OPT_HOME
-
 	# additional windows commands
 	PATH=$PATH:/c/Windows:/c/Windows/system32
 	export PATH
@@ -220,6 +247,12 @@ then
 	PATH=$PATH:~/.local/bin
 	export PATH		
 
+	# cygwin - we can optional add extra paths to cygwin executables (but may require some care...)
+	CYGWIN_HOME=$OPT_HOME/cygwin64
+	export CYGWIN_HOME
+	#PATH=$PATH:$CYGWIN_HOME/bin:$CYGWIN_HOME/sbin:$CYGWIN_HOME/usr:$CYGWIN_HOME:/usr/sbin
+	#export PATH
+
 fi
 
 #--------------------------------------------------------------------------
@@ -240,6 +273,7 @@ fi
 #--------------------------------------------------------------------------
 # man path 
 #
+
 MANPATH=/usr/local/man:/usr/share/man:/usr/openwin/man:/usr/dt/man
 export MANPATH
 
@@ -276,7 +310,7 @@ export GIT_HOME
 PATH=$PATH:$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin
 export PATH
 
-# prefer to use OpenSSH
+# prefer to use OpenSSH on Windows (we can run as Windows Service)
 if test "$OS" = "Windows_NT"
 then
 	GIT_SSH=$OPENSSH_HOME/ssh.exe	
@@ -292,7 +326,7 @@ fi
 if test "$OS" = "Windows_NT"
 then
 	# default on MinGW
-	JDK_HOME=/c/views/opt/AdoptJDK-11.0.13.8; export JDK_HOME
+	JDK_HOME=$OPT_HOME/AdoptJDK-11.0.13.8; export JDK_HOME
 
 	# augment if on Cygwin
 	if test "$MACHINE" = "Cygwin"
@@ -329,7 +363,7 @@ fi
 
 if test "$OS" = "Windows_NT"
 then
-	MVN_HOME=/c/views/opt/apache-maven-3.8.4; export MVN_HOME
+	MVN_HOME=$OPT_HOME/apache-maven-3.8.4; export MVN_HOME
 fi
 
 # add maven to the path
