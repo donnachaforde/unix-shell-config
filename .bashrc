@@ -403,6 +403,27 @@ fi
 
 
 #--------------------------------------------------------------------------
+# gRPC 
+#
+
+GRPC=""
+# cater for macOS
+if test "$OS" = "Darwin"
+then
+	GRPC_HOME=~/.local
+fi
+
+if test "$OS" = "Windows_NT"
+then
+	GRPC_HOME=/c/views/opt/grpc
+fi
+
+export GRPC_HOME; 
+PATH=$PATH:$GRPC_HOME/bin
+
+
+
+#--------------------------------------------------------------------------
 # source X display
 
 if test -f ~/.bashrc.display
