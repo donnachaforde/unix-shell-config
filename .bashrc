@@ -84,20 +84,31 @@ fi
 echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
 
-# show the OS type in a banner if the cmd is available (skip for mac as is displays it on its side)
-if test -f /usr/bin/banner
+
+#
+# show the OS type in a banner
+#
+# Note: 'banner' cmd on macOS displays on its side so favour 'figlet'
+#
+
+if test "$OS" = "Darwin"
 then
-	if test "$OS" != "Darwin"
+	if test -f /usr/local/bin/figlet
 	then
-		banner $OS
+		/usr/local/bin/figlet macOS
 	fi
 else
-	# if cygwin is installed and the optional banner command is present, we can invoke that banner (even from Git-Bash)
-	if test -d $OPT_HOME/cygwin64
+	if test -f /usr/bin/banner
 	then
-		if test -f $OPT_HOME/cygwin64/bin/banner
+		banner $OS
+	else
+		# if cygwin is installed and the optional banner command is present, we can invoke that banner exe (even from Git-Bash)
+		if test -d $OPT_HOME/cygwin64
 		then
-			$OPT_HOME/cygwin64/bin/banner Windows
+			if test -f $OPT_HOME/cygwin64/bin/banner
+			then
+				$OPT_HOME/cygwin64/bin/banner Windows
+			fi
 		fi
 	fi
 fi
@@ -341,6 +352,13 @@ then
 else 
 	# assume UNIX/Linux-like environment
 	JDK_HOME=/opt/java; export JDK_HOME	
+
+	# cater for macOS
+	if test "$OS" = "Darwin"
+	then
+		JDK_HOME=/Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home; export JDK_HOME
+	fi
+
 fi
 JAVA_HOME=$JDK_HOME; export JAVA_HOME
 
@@ -349,13 +367,12 @@ JAVA_HOME=$JDK_HOME; export JAVA_HOME
 PATH=$PATH:$JAVA_HOME/bin
 export PATH
 
-# add optional settings
+
 if test "$JAVA_OPTS" = ""
 then
 	JAVA_OPTS=; export JAVA_OPTS
 fi
 
-# we may need to add to the classpath
 if test "$CLASSPATH" = ""
 then
 	CLASSPATH=; export CLASSPATH
