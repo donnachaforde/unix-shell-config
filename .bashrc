@@ -5,7 +5,7 @@
 #
 # Developed by Donnacha Forde (donnacha.forde@gmail.com)
 #
-# Copyright © 2001 - 2020 Donnacha Forde. All rights reserved.
+# Copyright Â© 2001 - 2022 Donnacha Forde. All rights reserved.
 #
 # This software is provided 'as is' without warranty, expressed or implied.
 # Donnacha Forde accepts no responsibility for its use or reliability.
@@ -64,6 +64,23 @@ then
 fi
 
 
+#--------------------------------------------------------------------------
+# home settings
+#
+
+# On Windows, tending to work in a separate directory on the root drive (i.e. not in C:\Users\<username>)
+if test "$OS" = "Windows_NT"
+then
+	OPT_HOME=/c/views/opt; export OPT_HOME
+else
+	OPT_HOME=/opt; export OPT_HOME
+fi
+
+
+#--------------------------------------------------------------------------
+# display details of the current host
+#
+
 echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
 
@@ -74,30 +91,50 @@ then
 	then
 		banner $OS
 	fi
+else
+	# if cygwin is installed and the optional banner command is present, we can invoke that banner (even from Git-Bash)
+	if test -d $OPT_HOME/cygwin64
+	then
+		if test -f $OPT_HOME/cygwin64/bin/banner
+		then
+			$OPT_HOME/cygwin64/bin/banner Windows
+		fi
+	fi
 fi
+
+
 
 
 #--------------------------------------------------------------------------
 # prompt & window title
 #
 
-# Different bash implementations have different setting syntax
+# Different bash implementations have different setting syntax so we adjust by platform, etc.
 #
-# cygwin is not an xterm so it doesn't support 'title' 
+# - cygwin is not an xterm so it doesn't support 'title' 
 #
-# AIX bash does not support the syntax used on SunOS and HP-UX
-# (setting title & prompt settings creates duplicate prompt)
+# - AIX bash does not support the syntax used on SunOS and HP-UX
+#   (setting title & prompt settings creates duplicate prompt)
 #
-# The default is plain text = userid@host ~$ 
+# - The default is plain text = userid@host ~$ 
 #
+
+# Git Bash prompt on Windows is good enough so only uncomment block below if really necessary
 
 # start with simple prompt
-PS1="\u@\h \w$ "	
-
-# next we change it according to platform (i.e. add colour and title)
-if test "$OS" = "Windows_NT"
+if test "$OS" != "Windows_NT"
 then
-	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
+	PS1="\u@\h \w$ "	
+fi
+
+# if test "$OS" = "Windows_NT"
+# then
+# 	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
+# fi
+
+if test "$MACHINE" = "Cygwin"
+then
+ 	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 fi
 
 if test "$OS" = "AIX"			
@@ -126,24 +163,108 @@ fi
 # environment settings
 #
 
-# console colours - CygWin
-if test "$OS" = "Windows_NT"
+# console colours - extra step needed for CygWin but Git Bash default is good enough
+
+# augment if on Cygwin
+if test "$MACHINE" = "Cygwin"
 then
 	eval `dircolors -b /etc/DIR_COLORS`
-	alias ls='ls --color=auto'		# must alias ls to see the colours
 fi
+
+if test "$OS" = "Windows_NT"
+then
+	# alias 'ls' to ensure we see the colours	
+	alias ls='ls --color=auto'		
+fi
+
 
 
 #--------------------------------------------------------------------------
 # path settings
 #
 
-# binaries
-PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
-export PATH
+# OpenSSH env
+if test "$OS" = "Windows_NT"
+then
+	OPENSSH_HOME=/c/Windows/System32/OpenSSH
+	export OPENSSH_HOME
+fi
+
+# add common UNIX/Linux paths 
+if test "$OS" = "Windows_NT"
+then
+	# show precedence to OpenSSH
+	PATH=.:$OPENSSH_HOME:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
+	export PATH
+else
+	PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
+	export PATH
+fi
 
 
-# library path (Note:  The environment variable is different on Solaris.)
+# add extra paths for Windows
+if test "$OS" = "Windows_NT"
+then
+	# additional windows commands
+	PATH=$PATH:/c/Windows:/c/Windows/system32
+	export PATH
+
+	# sysinternal commands
+	PATH=$PATH:$OPT_HOME/sysinternalssuite
+	export PATH
+	
+	# ninja
+	PATH=$PATH:$OPT_HOME/ninja
+	export PATH
+	
+	# nasm
+	PATH=$PATH:$OPT_HOME/nasm
+	export PATH
+
+	# launch vs code from command line
+	PATH=$PATH:~/AppData/Local/Programs/Microsoft\ VS\ Code/bin
+	export PATH
+
+	# add VS dev VS tools (like dumpbin.exe) 
+	VS_HOME=/c/Program\ Files/Microsoft\ Visual\ Studio/2022/Professional
+	export VS_HOME; 
+	PATH=$PATH:$VS_HOME/Common7/IDE:$VS_HOME/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64
+	export PATH	
+
+	# add cmake tools
+	PATH=$PATH:/c/Program\ Files/CMake/bin
+	export PATH
+
+	# add other unix binaries to the cmd line (sourced from msys/mingw)
+	PATH=$PATH:$OPT_HOME/msys64/usr/bin:$OPT_HOME/msys64/mingw64/bin
+	export PATH	
+
+	# add PERL location for MinGW
+	PATH=$PATH:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+	export PATH	
+
+	# gRPC - installed from build
+	PATH=$PATH:$OPT_HOME/grpc/bin
+	export PATH		
+
+	# cygwin - we can optional add extra paths to cygwin executables (but may require some care...)
+	CYGWIN_HOME=$OPT_HOME/cygwin64
+	export CYGWIN_HOME
+	#PATH=$PATH:$CYGWIN_HOME/bin:$CYGWIN_HOME/sbin:$CYGWIN_HOME/usr:$CYGWIN_HOME:/usr/sbin
+	#export PATH
+
+	# add go-lang
+	PATH=$PATH:/c/Program\ Files/Go/bin
+	export PATH
+
+
+fi
+
+#--------------------------------------------------------------------------
+# library path 
+#
+
+# Note: The library environment variable is different on Solaris.
 if test "$OS" = "SunOS"
 then
 	LD_LIBRARY_PATH=.:/lib:/usr/lib:/usr/local/lib:/usr/ccs/lib:/usr/ucblib
@@ -153,7 +274,11 @@ else
 	export LIBPATH
 fi
 
+
+#--------------------------------------------------------------------------
 # man path 
+#
+
 MANPATH=/usr/local/man:/usr/share/man:/usr/openwin/man:/usr/dt/man
 export MANPATH
 
@@ -181,6 +306,24 @@ export PATH
 
 
 #--------------------------------------------------------------------------
+# Git environment
+#
+
+GIT_HOME=/c/Program\ Files/Git
+export GIT_HOME
+
+PATH=$PATH:$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin
+export PATH
+
+# prefer to use OpenSSH on Windows (we can run as Windows Service)
+if test "$OS" = "Windows_NT"
+then
+	GIT_SSH=$OPENSSH_HOME/ssh.exe	
+	export GIT_SSH
+fi
+
+
+#--------------------------------------------------------------------------
 # Java environment
 #
 
@@ -188,7 +331,7 @@ export PATH
 if test "$OS" = "Windows_NT"
 then
 	# default on MinGW
-	JDK_HOME=/c/views/opt/jdk-14.0.1; export JDK_HOME
+	JDK_HOME=$OPT_HOME/AdoptJDK-11.0.13.8; export JDK_HOME
 
 	# augment if on Cygwin
 	if test "$MACHINE" = "Cygwin"
@@ -196,8 +339,8 @@ then
 		JDK_HOME=/cygdrive/$JDK_HOME
 	fi
 else 
-	# Linux, MacOS plus Unix (AIX, HP-UX, Solaris)
-	JDK_HOME=/opt/java; export JDK_HOME
+	# assume UNIX/Linux-like environment
+	JDK_HOME=/opt/java; export JDK_HOME	
 fi
 JAVA_HOME=$JDK_HOME; export JAVA_HOME
 
@@ -206,15 +349,36 @@ JAVA_HOME=$JDK_HOME; export JAVA_HOME
 PATH=$PATH:$JAVA_HOME/bin
 export PATH
 
-
+# add optional settings
 if test "$JAVA_OPTS" = ""
 then
 	JAVA_OPTS=; export JAVA_OPTS
 fi
 
+# we may need to add to the classpath
 if test "$CLASSPATH" = ""
 then
 	CLASSPATH=; export CLASSPATH
+fi
+
+
+#--------------------------------------------------------------------------
+# Maven 
+#
+
+if test "$OS" = "Windows_NT"
+then
+	MVN_HOME=$OPT_HOME/apache-maven-3.8.4; export MVN_HOME
+fi
+
+# add maven to the path
+PATH=$PATH:$MVN_HOME/bin
+export PATH
+
+# define MVN_OPTS
+if test "$MVN_OPTS" = ""
+then
+	MVN_OPTS=; export MVN_OPTS
 fi
 
 
@@ -225,6 +389,7 @@ if test -f ~/.bashrc.display
 then
 	. ~/.bashrc.display
 fi
+
 
 #--------------------------------------------------------------------------
 # source aliases
@@ -237,7 +402,7 @@ echo
 
 
 #--------------------------------------------------------------------------
-# display shell version 
+# Display shell version, date & time
 #
 
 if test -f /bin/bash
@@ -253,11 +418,6 @@ else
 		echo
 	fi
 fi
-
-
-#--------------------------------------------------------------------------
-# display date & time 
-#
 
 date
 echo
