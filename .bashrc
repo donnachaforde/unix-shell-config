@@ -57,7 +57,7 @@ then
 	WHOAMI=${WHOAMI:-`/usr/ucb/whoami`}
 fi
 
-# cater for MacOS
+# cater for macOS
 if test "$OS" = "Darwin"
 then
 	WHOAMI=${WHOAMI:-`/usr/bin/whoami`}
@@ -320,11 +320,15 @@ export PATH
 # Git environment
 #
 
-GIT_HOME=/c/Program\ Files/Git
-export GIT_HOME
+# ensure paths to git executables are available
+if test "$OS" = "Windows_NT"
+then
+	GIT_HOME=/c/Program\ Files/Git
+	export GIT_HOME
 
-PATH=$PATH:$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin
-export PATH
+	PATH=$PATH:$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin
+	export PATH
+fi
 
 # prefer to use OpenSSH on Windows (we can run as Windows Service)
 if test "$OS" = "Windows_NT"
@@ -383,19 +387,18 @@ fi
 # Maven 
 #
 
+# ensure mvn is on the path on Windows
 if test "$OS" = "Windows_NT"
 then
 	MVN_HOME=$OPT_HOME/apache-maven-3.8.4; export MVN_HOME
-fi
+	PATH=$PATH:$MVN_HOME/bin
+	export PATH
 
-# add maven to the path
-PATH=$PATH:$MVN_HOME/bin
-export PATH
-
-# define MVN_OPTS
-if test "$MVN_OPTS" = ""
-then
-	MVN_OPTS=; export MVN_OPTS
+	# define MVN_OPTS
+	if test "$MVN_OPTS" = ""
+	then
+		MVN_OPTS=; export MVN_OPTS
+	fi
 fi
 
 
