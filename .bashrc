@@ -406,7 +406,7 @@ fi
 # gRPC 
 #
 
-GRPC=""
+GRPC_HOME=/opt/grpc
 # cater for macOS
 if test "$OS" = "Darwin"
 then
