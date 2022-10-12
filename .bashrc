@@ -54,7 +54,7 @@ then
 	WHOAMI=${WHOAMI:-`/usr/ucb/whoami`}
 fi
 
-# cater for MacOS
+# cater for macOS
 if test "$OS" = "Darwin"
 then
 	WHOAMI=${WHOAMI:-`/usr/bin/whoami`}
@@ -81,20 +81,31 @@ fi
 echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
 
-# show the OS type in a banner if the cmd is available (skip for mac as is displays it on its side)
-if test -f /usr/bin/banner
+
+#
+# show the OS type in a banner
+#
+# Note: 'banner' cmd on macOS displays on its side so favour 'figlet'
+#
+
+if test "$OS" = "Darwin"
 then
-	if test "$OS" != "Darwin"
+	if test -f /usr/local/bin/figlet
 	then
-		banner $OS
+		/usr/local/bin/figlet macOS
 	fi
 else
-	# if cygwin is installed and the optional banner command is present, we can invoke that banner (even from Git-Bash)
-	if test -d $OPT_HOME/cygwin64
+	if test -f /usr/bin/banner
 	then
-		if test -f $OPT_HOME/cygwin64/bin/banner
+		banner $OS
+	else
+		# if cygwin is installed and the optional banner command is present, we can invoke that banner exe (even from Git-Bash)
+		if test -d $OPT_HOME/cygwin64
 		then
-			$OPT_HOME/cygwin64/bin/banner Windows
+			if test -f $OPT_HOME/cygwin64/bin/banner
+			then
+				$OPT_HOME/cygwin64/bin/banner Windows
+			fi
 		fi
 	fi
 fi
@@ -306,11 +317,15 @@ export PATH
 # Git environment
 #
 
-GIT_HOME=/c/Program\ Files/Git
-export GIT_HOME
+# ensure paths to git executables are available
+if test "$OS" = "Windows_NT"
+then
+	GIT_HOME=/c/Program\ Files/Git
+	export GIT_HOME
 
-PATH=$PATH:$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin
-export PATH
+	PATH=$PATH:$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin
+	export PATH
+fi
 
 # prefer to use OpenSSH on Windows (we can run as Windows Service)
 if test "$OS" = "Windows_NT"
@@ -338,6 +353,13 @@ then
 else 
 	# assume UNIX/Linux-like environment
 	JDK_HOME=/opt/java; export JDK_HOME	
+
+	# cater for macOS
+	if test "$OS" = "Darwin"
+	then
+		JDK_HOME=/Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home; export JDK_HOME
+	fi
+
 fi
 JAVA_HOME=$JDK_HOME; export JAVA_HOME
 
@@ -346,13 +368,12 @@ JAVA_HOME=$JDK_HOME; export JAVA_HOME
 PATH=$PATH:$JAVA_HOME/bin
 export PATH
 
-# add optional settings
+
 if test "$JAVA_OPTS" = ""
 then
 	JAVA_OPTS=; export JAVA_OPTS
 fi
 
-# we may need to add to the classpath
 if test "$CLASSPATH" = ""
 then
 	CLASSPATH=; export CLASSPATH
@@ -363,20 +384,40 @@ fi
 # Maven 
 #
 
+# ensure mvn is on the path on Windows
 if test "$OS" = "Windows_NT"
 then
 	MVN_HOME=$OPT_HOME/apache-maven-3.8.4; export MVN_HOME
+	PATH=$PATH:$MVN_HOME/bin
+	export PATH
+
+	# define MVN_OPTS
+	if test "$MVN_OPTS" = ""
+	then
+		MVN_OPTS=; export MVN_OPTS
+	fi
 fi
 
-# add maven to the path
-PATH=$PATH:$MVN_HOME/bin
-export PATH
 
-# define MVN_OPTS
-if test "$MVN_OPTS" = ""
+#--------------------------------------------------------------------------
+# gRPC 
+#
+
+GRPC_HOME=/opt/grpc
+# cater for macOS
+if test "$OS" = "Darwin"
 then
-	MVN_OPTS=; export MVN_OPTS
+	GRPC_HOME=~/.local
 fi
+
+if test "$OS" = "Windows_NT"
+then
+	GRPC_HOME=/c/views/opt/grpc
+fi
+
+export GRPC_HOME; 
+PATH=$PATH:$GRPC_HOME/bin
+
 
 
 #--------------------------------------------------------------------------
