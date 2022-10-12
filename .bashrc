@@ -2,9 +2,6 @@
 #
 # .bashrc - Bash Shell environment settings
 #
-#
-# Developed by Donnacha Forde (donnacha.forde@gmail.com)
-#
 # Copyright © 2001 - 2022 Donnacha Forde. All rights reserved.
 #
 # This software is provided 'as is' without warranty, expressed or implied.
