@@ -2,7 +2,7 @@
 #
 # ~/.bashrc.alias (sourced by ~/.bashrc and ~./kshrc)
 #
-# Copyright © 2001 - 2022 Donnacha Forde. All rights reserved.
+# Copyright © 2001 - 2024 Donnacha Forde. All rights reserved.
 #
 # This software is provided 'as is' without warranty, expressed or implied.
 # Donnacha Forde accepts no responsibility for its use or reliability.
@@ -39,6 +39,7 @@ alias fgrep='fgrep --color=auto'
 alias df='df -h'
 alias du='du -h'
 
+
 # interactive mode for the safety conscious
 #alias rm='rm-i'
 #alias cp='cp -i'
@@ -52,12 +53,6 @@ alias du='du -h'
 # tools
 alias snav=snavigator
 alias tn=telnet
-
-
-# xterm short-cuts - provide fore-ground colour - e.g. -fg green
-alias xt=xterm
-alias xtx="xterm -sb -sl 999 -bg black -fn arial "
-alias xwin="xterm -sb -sl 999 -fg white -bg black -fn arial "
 
 
 # dos commands
@@ -78,11 +73,3 @@ alias cd.='cd .'
 alias cd-='cd -'
 
 
-# git shortcuts
-alias gs='git status'
-alias gd='git diff --name-only --cached'
-alias gl='git log --oneline'
-alias gc='git commit'
-alias ga='git add'
-alias gf='git fetch'
-alias gsc='git log origin/main..HEAD --oneline'

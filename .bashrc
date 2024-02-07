@@ -2,7 +2,7 @@
 #
 # .bashrc - Bash Shell environment settings
 #
-# Copyright © 2001 - 2022 Donnacha Forde. All rights reserved.
+# Copyright © 2001 - 2024 Donnacha Forde. All rights reserved.
 #
 # This software is provided 'as is' without warranty, expressed or implied.
 # Donnacha Forde accepts no responsibility for its use or reliability.
@@ -16,8 +16,7 @@ echo
 
 
 #--------------------------------------------------------------------------
-# determine platform, user and hostname and type of machine/environment
-#
+# display host details
 
 OS=${OS:-`uname`}
 HOSTNAME=${HOSTNAME:-`hostname`}
@@ -33,7 +32,7 @@ case "${UNAME}" in
     *)          MACHINE="UNKNOWN:${UNAME}"
 esac
 
-
+# whoami command located in different places across OS
 if test "$OS" = "Windows_NT"
 then
 	WHOAMI=${WHOAMI:-`/bin/whoami`}
@@ -63,12 +62,11 @@ fi
 
 #--------------------------------------------------------------------------
 # home settings
-#
 
 # On Windows, tending to work in a separate directory on the root drive (i.e. not in C:\Users\<username>)
 if test "$OS" = "Windows_NT"
 then
-	OPT_HOME=/c/views/opt; export OPT_HOME
+	OPT_HOME=/d/opt; export OPT_HOME
 else
 	OPT_HOME=/opt; export OPT_HOME
 fi
@@ -76,22 +74,16 @@ fi
 
 #--------------------------------------------------------------------------
 # display details of the current host
-#
 
 echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
 
-
-#
 # show the OS type in a banner
-#
-# Note: 'banner' cmd on macOS displays on its side so favour 'figlet'
-#
-
 if test "$OS" = "Darwin"
 then
 	if test -f /usr/local/bin/figlet
 	then
+		# 'banner' cmd on macOS displays on its side so favour 'figlet'
 		/usr/local/bin/figlet macOS
 	fi
 else
@@ -99,23 +91,17 @@ else
 	then
 		banner $OS
 	else
-		# if cygwin is installed and the optional banner command is present, we can invoke that banner exe (even from Git-Bash)
-		if test -d $OPT_HOME/cygwin64
+		# on windows, we can use the optional cygwin banner.exe command, even from GitBash
+		if test -f $OPT_HOME/cygwin64/bin/banner
 		then
-			if test -f $OPT_HOME/cygwin64/bin/banner
-			then
-				$OPT_HOME/cygwin64/bin/banner Windows
-			fi
+			$OPT_HOME/cygwin64/bin/banner Windows
 		fi
 	fi
 fi
 
 
-
-
 #--------------------------------------------------------------------------
 # prompt & window title
-#
 
 # Different bash implementations have different setting syntax so we adjust by platform, etc.
 #
@@ -127,14 +113,13 @@ fi
 # - The default is plain text = userid@host ~$ 
 #
 
-# Git Bash prompt on Windows is good enough so only uncomment block below if really necessary
-
 # start with simple prompt
 if test "$OS" != "Windows_NT"
 then
 	PS1="\u@\h \w$ "	
 fi
 
+# Git Bash prompt on Windows is good enough so only uncomment block below if really necessary
 # if test "$OS" = "Windows_NT"
 # then
 # 	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
@@ -169,7 +154,6 @@ fi
 
 #--------------------------------------------------------------------------
 # environment settings
-#
 
 # console colours - extra step needed for CygWin but Git Bash default is good enough
 
@@ -186,29 +170,12 @@ then
 fi
 
 
-
 #--------------------------------------------------------------------------
 # path settings
-#
-
-# OpenSSH env
-if test "$OS" = "Windows_NT"
-then
-	OPENSSH_HOME=/c/Windows/System32/OpenSSH
-	export OPENSSH_HOME
-fi
 
 # add common UNIX/Linux paths 
-if test "$OS" = "Windows_NT"
-then
-	# show precedence to OpenSSH
-	PATH=.:$OPENSSH_HOME:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
-	export PATH
-else
-	PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
-	export PATH
-fi
-
+PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
+export PATH
 
 # add extra paths for Windows
 if test "$OS" = "Windows_NT"
@@ -229,19 +196,15 @@ then
 	PATH=$PATH:$OPT_HOME/nasm
 	export PATH
 
-	# launch vs code from command line
+	# launch VS Code from command line
 	PATH=$PATH:~/AppData/Local/Programs/Microsoft\ VS\ Code/bin
 	export PATH
 
-	# add VS dev VS tools (like dumpbin.exe) 
+	# add VS dev tools (like dumpbin.exe) 
 	VS_HOME=/c/Program\ Files/Microsoft\ Visual\ Studio/2022/Professional
 	export VS_HOME; 
 	PATH=$PATH:$VS_HOME/Common7/IDE:$VS_HOME/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64
 	export PATH	
-
-	# add cmake tools
-	PATH=$PATH:/c/Program\ Files/CMake/bin
-	export PATH
 
 	# add other unix binaries to the cmd line (sourced from msys/mingw)
 	PATH=$PATH:$OPT_HOME/msys64/usr/bin:$OPT_HOME/msys64/mingw64/bin
@@ -251,41 +214,30 @@ then
 	PATH=$PATH:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
 	export PATH	
 
-	# gRPC - installed from build
-	PATH=$PATH:$OPT_HOME/grpc/bin
-	export PATH		
-
 	# cygwin - we can optional add extra paths to cygwin executables (but may require some care...)
 	CYGWIN_HOME=$OPT_HOME/cygwin64
 	export CYGWIN_HOME
 	#PATH=$PATH:$CYGWIN_HOME/bin:$CYGWIN_HOME/sbin:$CYGWIN_HOME/usr:$CYGWIN_HOME:/usr/sbin
 	#export PATH
-
-	# add go-lang
-	PATH=$PATH:/c/Program\ Files/Go/bin
-	export PATH
-
-
 fi
+
 
 #--------------------------------------------------------------------------
 # library path 
-#
 
-# Note: The library environment variable is different on Solaris.
+LIBPATH=.:/lib:/usr/lib:/usr/local/lib:/usr/ccs/lib:/usr/ucblib
+export LIBPATH
+
+# library environment variable is different on Solaris.
 if test "$OS" = "SunOS"
 then
-	LD_LIBRARY_PATH=.:/lib:/usr/lib:/usr/local/lib:/usr/ccs/lib:/usr/ucblib
+	LD_LIBRARY_PATH=$LIBPATH 
 	export LD_LIBRARY_PATH
-else
-	LIBPATH=.:/lib:/usr/lib:/usr/local/lib:/usr/ccs/lib:/usr/ucblib
-	export LIBPATH
 fi
 
 
 #--------------------------------------------------------------------------
 # man path 
-#
 
 MANPATH=/usr/local/man:/usr/share/man:/usr/openwin/man:/usr/dt/man
 export MANPATH
@@ -293,140 +245,204 @@ export MANPATH
 # additional path on Solaris
 if test "$OS" = "SunOS"
 then
-	MANPATH=$MANPATH:/opt/SUNWspro/man
-	export MANPATH
+	MANPATH=$MANPATH:/opt/SUNWspro/man; export MANPATH
 fi
 
 
-# X binaries (usually elsewhere on Solaris)
+#--------------------------------------------------------------------------
+# X binaries
+
+# usually non-standard on Solaris and HP-UX
 if test "$OS" = "SunOS"
 then
-	PATH=$PATH:/usr/X/bin:/usr/X/sbin
+	XTERM_HOME=/usr/X; export XTERM_HOME
+else if test "$OS" = "HP-UX"
+	then
+		XTERM_HOME=/usr/X11; export XTERM_HOME
+	else
+		# default location
+		XTERM_HOME=/usr/X11R6/bin; export XTERM_HOME
+	fi
 fi
 
-if test "$OS" = "HP-UX"
-then
-	PATH=$PATH:/usr/X11/bin:/usr/X11/sbin
-else
-	PATH=$PATH:/usr/X11R6/bin:/usr/X11R6/sbin
+if [ -d $XTERM_HOME ]; then
+
+	# path
+	PATH=$PATH:$XTERM_HOME/sbin; export PATH
+
+	# alias (xterm short-cuts - provide fore-ground colour - e.g. -fg green)
+	alias xt=xterm
+	alias xtx="xterm -sb -sl 999 -bg black -fn arial "
+	alias xwin="xterm -sb -sl 999 -fg white -bg black -fn arial "
+
+	# source X display
+	if test -f ~/.bashrc.display
+	then
+		. ~/.bashrc.display
+	fi
 fi
-export PATH
 
 
 #--------------------------------------------------------------------------
 # Git environment
-#
 
-# ensure paths to git executables are available
-if test "$OS" = "Windows_NT"
-then
-	GIT_HOME=/c/Program\ Files/Git
-	export GIT_HOME
+# note: GitBash root is its install directory and Git is under here in the 'cmd' directory
 
-	PATH=$PATH:$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin
-	export PATH
-fi
+if [ -d /cmd ]; then	
 
-# prefer to use OpenSSH on Windows (we can run as Windows Service)
-if test "$OS" = "Windows_NT"
-then
-	GIT_SSH=$OPENSSH_HOME/ssh.exe	
-	export GIT_SSH
+	# home
+	GIT_HOME=/cmd; export GIT_HOME
+
+	# path
+	PATH=$PATH:$GIT_HOME; export PATH
+
+	# alias
+	alias gs='git status'
+	alias gd='git diff --name-only --cached'
+	alias gl='git log --oneline'
+	alias gc='git commit'
+	alias ga='git add'
+	alias gf='git fetch'
+	alias gsc='git log origin/main..HEAD --oneline'	
+
+	# give path preferene to OpenSSH commands, used by Git
+	if test "$OS" = "Windows_NT"
+	then
+		OPENSSH_HOME=/c/Windows/System32/OpenSSH; export OPENSSH_HOME;
+		PATH=$OPENSSH_HOME:$PATH; export PATH
+	fi
 fi
 
 
 #--------------------------------------------------------------------------
-# Java environment
-#
+# Java 
 
-# some variation with how local drives are reference between Cygwin, MinGW
-if test "$OS" = "Windows_NT"
-then
-	# default on MinGW
-	JDK_HOME=$OPT_HOME/AdoptJDK-11.0.13.8; export JDK_HOME
+if [ -d $OPT_HOME/java ]; then	
 
-	# augment if on Cygwin
-	if test "$MACHINE" = "Cygwin"
+	# home
+	JAVA_HOME=$OPT_HOME/java; export JAVA_HOME
+
+	# add any extra optional settings
+	if test "$JAVA_OPTS" = ""
 	then
-		JDK_HOME=/cygdrive/$JDK_HOME
-	fi
-else 
-	# assume UNIX/Linux-like environment
-	JDK_HOME=/opt/java; export JDK_HOME	
-
-	# cater for macOS
-	if test "$OS" = "Darwin"
-	then
-		JDK_HOME=/Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home; export JDK_HOME
+		JAVA_OPTS=; export JAVA_OPTS
 	fi
 
+	# add general classpath settings
+	if test "$CLASSPATH" = ""
+	then
+		CLASSPATH=; export CLASSPATH
+	fi
+
+
+	# path
+	PATH=$PATH:$JAVA_HOME/bin; export PATH
+
+	# libs
+	LIBPATH=$LIBPATH:$JAVA_HOME/lib; export LIBPATH
+
+	# man
+	MANPATH=$MANPATH:$JAVA_HOME/man; export MANPATH
+
+	# alias
+	# N/A
 fi
-JAVA_HOME=$JDK_HOME; export JAVA_HOME
 
-
-# add java to the path
-PATH=$PATH:$JAVA_HOME/bin
-export PATH
-
-
-if test "$JAVA_OPTS" = ""
-then
-	JAVA_OPTS=; export JAVA_OPTS
-fi
-
-if test "$CLASSPATH" = ""
-then
-	CLASSPATH=; export CLASSPATH
-fi
 
 
 #--------------------------------------------------------------------------
 # Maven 
-#
 
-# ensure mvn is on the path on Windows
-if test "$OS" = "Windows_NT"
-then
-	MVN_HOME=$OPT_HOME/apache-maven-3.8.4; export MVN_HOME
-	PATH=$PATH:$MVN_HOME/bin
-	export PATH
+if [ -d $OPT_HOME/maven ]; then
 
-	# define MVN_OPTS
+	# home
+	MVN_HOME=$OPT_HOME/maven; export MVN_HOME
+
+	# opts
 	if test "$MVN_OPTS" = ""
 	then
 		MVN_OPTS=; export MVN_OPTS
 	fi
+
+	# path
+	PATH=$PATH:$MVN_HOME/bin; export PATH
+
+	# libs
+	LIBPATH=$LIBPATH:$MVN_HOME/lib; export LIBPATH
+
+	# man
+	MANPATH=$MANPATH:$MVN_HOME/man; export MANPATH
+
+	# alias
+	alias mci='mvn clean install'
+
 fi
 
 
 #--------------------------------------------------------------------------
 # gRPC 
-#
 
-GRPC_HOME=/opt/grpc
-# cater for macOS
-if test "$OS" = "Darwin"
-then
-	GRPC_HOME=~/.local
+if [ -d $OPT_HOME/grpc ]; then
+
+	# home
+	GRPC_HOME=$OPT_HOME/grpc; export GRPC_HOME
+
+	# path
+	PATH=$PATH:$GRPC_HOME/bin; export PATH
+
+	# libs
+	LIBPATH=$LIBPATH:$GRPC_HOME/lib; export LIBPATH
+
+	# man
+	MANPATH=$MANPATH:$GRPC_HOME/man; export MANPATH
+
+	# alias
+
 fi
-
-if test "$OS" = "Windows_NT"
-then
-	GRPC_HOME=/c/views/opt/grpc
-fi
-
-export GRPC_HOME; 
-PATH=$PATH:$GRPC_HOME/bin
-
 
 
 #--------------------------------------------------------------------------
-# source X display
+# CMake
 
-if test -f ~/.bashrc.display
-then
-	. ~/.bashrc.display
+if [ -d $OPT_HOME/CMake ]; then
+
+	# home
+	CMAKE_HOME=$OPT_HOME/CMake; export CMAKE_HOME
+
+	# path
+	PATH=$PATH:$CMAKE_HOME/bin; export PATH
+
+	# lib path 
+	# N/A
+
+	# man
+	# N/A
+
+	# alias
+	alias cm cmake
+
 fi
+
+
+#--------------------------------------------------------------------------
+# Golang
+
+if [ -d $OPT_HOME/Go ]; then
+
+	# home
+	GOLANG_HOME=$OPT_HOME/Go; export GOLANG_HOME
+
+	# path
+	PATH=$PATH:$GOLANG_HOME/bin; export PATH
+
+	# lib path - N/A
+
+	# man - N/A
+
+	# alias
+
+fi
+
 
 
 #--------------------------------------------------------------------------
