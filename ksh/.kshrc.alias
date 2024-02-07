@@ -1,0 +1,2 @@
+# defer ksh settings to bash settings
+. ~/.bashrc.alias
