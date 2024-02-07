@@ -1,0 +1,4 @@
+# ~/.cshrc.display (sourced by ~/.cshrc)
+
+# set $DISPLAY to your display terminal
+setenv DISPLAY 0.0.0.0:0.0:0.0
