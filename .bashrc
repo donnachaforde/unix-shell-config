@@ -66,7 +66,7 @@ fi
 # On Windows, tending to work in a separate directory on the root drive (i.e. not in C:\Users\<username>)
 if test "$OS" = "Windows_NT"
 then
-	OPT_HOME=/c/views/opt; export OPT_HOME
+	OPT_HOME=/d/opt; export OPT_HOME
 else
 	OPT_HOME=/opt; export OPT_HOME
 fi
@@ -173,23 +173,9 @@ fi
 #--------------------------------------------------------------------------
 # path settings
 
-# OpenSSH env
-if test "$OS" = "Windows_NT"
-then
-	OPENSSH_HOME=/c/Windows/System32/OpenSSH
-	export OPENSSH_HOME
-fi
-
 # add common UNIX/Linux paths 
-if test "$OS" = "Windows_NT"
-then
-	# show precedence to OpenSSH
-	PATH=.:$OPENSSH_HOME:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
-	export PATH
-else
-	PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
-	export PATH
-fi
+PATH=.:~/bin/$OS:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/ucb:/usr/ccs/bin:/usr/dt/bin:/usr/proc/bin
+export PATH
 
 # add extra paths for Windows
 if test "$OS" = "Windows_NT"
@@ -210,16 +196,15 @@ then
 	PATH=$PATH:$OPT_HOME/nasm
 	export PATH
 
-	# launch vs code from command line
+	# launch VS Code from command line
 	PATH=$PATH:~/AppData/Local/Programs/Microsoft\ VS\ Code/bin
 	export PATH
 
-	# add VS dev VS tools (like dumpbin.exe) 
+	# add VS dev tools (like dumpbin.exe) 
 	VS_HOME=/c/Program\ Files/Microsoft\ Visual\ Studio/2022/Professional
 	export VS_HOME; 
 	PATH=$PATH:$VS_HOME/Common7/IDE:$VS_HOME/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64
 	export PATH	
-
 
 	# add other unix binaries to the cmd line (sourced from msys/mingw)
 	PATH=$PATH:$OPT_HOME/msys64/usr/bin:$OPT_HOME/msys64/mingw64/bin
@@ -234,30 +219,25 @@ then
 	export CYGWIN_HOME
 	#PATH=$PATH:$CYGWIN_HOME/bin:$CYGWIN_HOME/sbin:$CYGWIN_HOME/usr:$CYGWIN_HOME:/usr/sbin
 	#export PATH
-
-
-
-
 fi
+
 
 #--------------------------------------------------------------------------
 # library path 
-#
 
-# Note: The library environment variable is different on Solaris.
+LIBPATH=.:/lib:/usr/lib:/usr/local/lib:/usr/ccs/lib:/usr/ucblib
+export LIBPATH
+
+# library environment variable is different on Solaris.
 if test "$OS" = "SunOS"
 then
-	LD_LIBRARY_PATH=.:/lib:/usr/lib:/usr/local/lib:/usr/ccs/lib:/usr/ucblib
+	LD_LIBRARY_PATH=$LIBPATH 
 	export LD_LIBRARY_PATH
-else
-	LIBPATH=.:/lib:/usr/lib:/usr/local/lib:/usr/ccs/lib:/usr/ucblib
-	export LIBPATH
 fi
 
 
 #--------------------------------------------------------------------------
 # man path 
-#
 
 MANPATH=/usr/local/man:/usr/share/man:/usr/openwin/man:/usr/dt/man
 export MANPATH
@@ -265,70 +245,82 @@ export MANPATH
 # additional path on Solaris
 if test "$OS" = "SunOS"
 then
-	MANPATH=$MANPATH:/opt/SUNWspro/man
-	export MANPATH
+	MANPATH=$MANPATH:/opt/SUNWspro/man; export MANPATH
 fi
 
 
-# X binaries (usually elsewhere on Solaris)
+#--------------------------------------------------------------------------
+# X binaries
+
+# usually non-standard on Solaris and HP-UX
 if test "$OS" = "SunOS"
 then
-	PATH=$PATH:/usr/X/bin:/usr/X/sbin
+	XTERM_HOME=/usr/X; export XTERM_HOME
+else if test "$OS" = "HP-UX"
+	then
+		XTERM_HOME=/usr/X11; export XTERM_HOME
+	else
+		# default location
+		XTERM_HOME=/usr/X11R6/bin; export XTERM_HOME
+	fi
 fi
 
-if test "$OS" = "HP-UX"
-then
-	PATH=$PATH:/usr/X11/bin:/usr/X11/sbin
-else
-	PATH=$PATH:/usr/X11R6/bin:/usr/X11R6/sbin
+if [ -d $XTERM_HOME ]; then
+
+	# path
+	PATH=$PATH:$XTERM_HOME/sbin; export PATH
+
+	# alias (xterm short-cuts - provide fore-ground colour - e.g. -fg green)
+	alias xt=xterm
+	alias xtx="xterm -sb -sl 999 -bg black -fn arial "
+	alias xwin="xterm -sb -sl 999 -fg white -bg black -fn arial "
+
+	# source X display
+	if test -f ~/.bashrc.display
+	then
+		. ~/.bashrc.display
+	fi
 fi
-export PATH
 
 
 #--------------------------------------------------------------------------
 # Git environment
-#
 
-# ensure paths to git executables are available
-if test "$OS" = "Windows_NT"
-then
-	GIT_HOME=/c/Program\ Files/Git; export GIT_HOME
-fi
+# note: GitBash root is its install directory and Git is under here in the 'cmd' directory
 
-# prefer to use OpenSSH on Windows (we can run as Windows Service)
-if test "$OS" = "Windows_NT"
-then
-	GIT_SSH=$OPENSSH_HOME/ssh.exe; 	export GIT_SSH
-fi
-
-
-if test -f $GIT_HOME
+if [ -d /cmd ]; then	
 
 	# home
-	GIT_HOME=$OPT_HOME/maven; export GIT_HOME
+	GIT_HOME=/cmd; export GIT_HOME
 
 	# path
-	PATH=$PATH::$GIT_HOME/bin:$GIT_HOME/cmd:$GIT_HOME/usr/bin; export PATH
-
-	# libs
-	LIBPATH=$LIBPATH:$GIT_HOME/lib; export LIBPATH
-
-	# man
-	MANPATH=$MANPATH:$GIT_HOME/man; export MANPATH
+	PATH=$PATH:$GIT_HOME; export PATH
 
 	# alias
+	alias gs='git status'
+	alias gd='git diff --name-only --cached'
+	alias gl='git log --oneline'
+	alias gc='git commit'
+	alias ga='git add'
+	alias gf='git fetch'
+	alias gsc='git log origin/main..HEAD --oneline'	
 
+	# give path preferene to OpenSSH commands, used by Git
+	if test "$OS" = "Windows_NT"
+	then
+		OPENSSH_HOME=/c/Windows/System32/OpenSSH; export OPENSSH_HOME;
+		PATH=$OPENSSH_HOME:$PATH; export PATH
+	fi
 fi
-
 
 
 #--------------------------------------------------------------------------
 # Java 
 
-if test -f $OPT_HOME/java
-	
+if [ -d $OPT_HOME/java ]; then	
+
 	# home
-	JAVA_HOME=$OPT_HOME/maven; export JAVA_HOME
+	JAVA_HOME=$OPT_HOME/java; export JAVA_HOME
 
 	# add any extra optional settings
 	if test "$JAVA_OPTS" = ""
@@ -354,7 +346,6 @@ if test -f $OPT_HOME/java
 
 	# alias
 	# N/A
-
 fi
 
 
@@ -362,7 +353,7 @@ fi
 #--------------------------------------------------------------------------
 # Maven 
 
-if test -f $OPT_HOME/maven
+if [ -d $OPT_HOME/maven ]; then
 
 	# home
 	MVN_HOME=$OPT_HOME/maven; export MVN_HOME
@@ -383,7 +374,7 @@ if test -f $OPT_HOME/maven
 	MANPATH=$MANPATH:$MVN_HOME/man; export MANPATH
 
 	# alias
-	alias mci maven clean install
+	alias mci='mvn clean install'
 
 fi
 
@@ -391,7 +382,7 @@ fi
 #--------------------------------------------------------------------------
 # gRPC 
 
-if test -f $OPT_HOME/grpc
+if [ -d $OPT_HOME/grpc ]; then
 
 	# home
 	GRPC_HOME=$OPT_HOME/grpc; export GRPC_HOME
@@ -410,11 +401,10 @@ if test -f $OPT_HOME/grpc
 fi
 
 
-
 #--------------------------------------------------------------------------
 # CMake
 
-if test -f $OPT_HOME/CMake
+if [ -d $OPT_HOME/CMake ]; then
 
 	# home
 	CMAKE_HOME=$OPT_HOME/CMake; export CMAKE_HOME
@@ -437,7 +427,7 @@ fi
 #--------------------------------------------------------------------------
 # Golang
 
-if test -f $OPT_HOME/Go
+if [ -d $OPT_HOME/Go ]; then
 
 	# home
 	GOLANG_HOME=$OPT_HOME/Go; export GOLANG_HOME
@@ -453,14 +443,6 @@ if test -f $OPT_HOME/Go
 
 fi
 
-
-#--------------------------------------------------------------------------
-# source X display
-
-if test -f ~/.bashrc.display
-then
-	. ~/.bashrc.display
-fi
 
 
 #--------------------------------------------------------------------------
