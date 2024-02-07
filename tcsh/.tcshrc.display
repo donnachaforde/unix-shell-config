@@ -1,0 +1,2 @@
+# defer tcsh settings to csh settings
+source ~/.cshrc.display
