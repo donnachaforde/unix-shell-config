@@ -81,6 +81,7 @@ echo
 # show the OS type in a banner
 if test "$OS" = "Darwin"
 then
+	# $ brew install figlet
 	if test -f /usr/local/bin/figlet
 	then
 		# 'banner' cmd on macOS displays on its side so favour 'figlet'
@@ -454,6 +455,15 @@ then
 fi
 echo
 
+
+#--------------------------------------------------------------------------
+# source git autocomplete 
+
+if test -f ~/.git-completion.bash
+then
+	. ~/.git-completion.bash
+fi
+echo
 
 #--------------------------------------------------------------------------
 # Display shell version, date & time
