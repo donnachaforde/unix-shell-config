@@ -222,10 +222,17 @@ then
 	#export PATH
 fi
 
-# Give preference to 'brew' commands over defaults on macOS
+# Configure paths for macOS
 if test "$OS" = "Darwin"
 then
-	PATH=/opt/homebrew/bin:$PATH; export PATH
+	# give preference to 'brew' commands
+	PATH=./:/opt/homebrew/bin:$PATH; export PATH
+
+	# ensure we can launch VS Code from command line
+	if [ -d /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin ]; then
+		VSCODE_HOME=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin; export VSCODE_HOME
+		PATH=$PATH:$VSCODE_HOME; export PATH
+	fi	
 fi
 
 
