@@ -81,7 +81,7 @@ echo
 # show the OS type in a banner
 if test "$OS" = "Darwin"
 then
-	# $ brew install figlet
+	# use '$ brew install figlet'
 	if test -f /usr/local/bin/figlet
 	then
 		# 'banner' cmd on macOS displays on its side so favour 'figlet'
@@ -226,7 +226,9 @@ fi
 if test "$OS" = "Darwin"
 then
 	# give preference to 'brew' commands
-	PATH=./:/opt/homebrew/bin:$PATH; export PATH
+	BREW_HOME=/opt/homebrew; export BREW_HOME
+	PATH=$BREW_HOME:$PATH; export PATH
+
 
 	# ensure we can launch VS Code from command line
 	if [ -d /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin ]; then
