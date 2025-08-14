@@ -430,12 +430,6 @@ if [ -d $OPT_HOME/CMake ]; then
 	# path
 	PATH=$PATH:$CMAKE_HOME/bin; export PATH
 
-	# lib path 
-	# N/A
-
-	# man
-	# N/A
-
 	# alias
 	alias cm cmake
 
@@ -453,14 +447,25 @@ if [ -d $OPT_HOME/Go ]; then
 	# path
 	PATH=$PATH:$GOLANG_HOME/bin; export PATH
 
-	# lib path - N/A
-
-	# man - N/A
-
-	# alias
-
 fi
 
+
+#--------------------------------------------------------------------------
+# gpg
+
+# set up gpg on macOS
+if test "$OS" = "Darwin"
+then
+# if the gpg command is exists in the home brew directory
+
+	if [ -f $BREW_HOME/bin/gpg ]; then
+
+		echo "Setting up GPG for macOS..."
+
+		# set shell var for pgp
+		GPG_TTY=$(tty); export GPG_TTY
+	fi
+fi
 
 
 #--------------------------------------------------------------------------
