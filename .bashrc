@@ -222,6 +222,12 @@ then
 	#export PATH
 fi
 
+# Give preference to 'brew' commands over defaults on macOS
+if test "$OS" = "Darwin"
+then
+	PATH=/opt/homebrew/bin:$PATH; export PATH
+fi
+
 
 #--------------------------------------------------------------------------
 # library path 
