@@ -293,32 +293,38 @@ fi
 #--------------------------------------------------------------------------
 # Git environment
 
-# note: GitBash root is its install directory and Git is under here in the 'cmd' directory
+# On Windows, git gets installed with 'GitBash', under the 'cmd' directory
+if test "$OS" = "Windows_NT" 
+then
+	if [ -d /cmd ]; then	
 
-if [ -d /cmd ]; then	
+		# home
+		GIT_HOME=/cmd; export GIT_HOME
 
-	# home
-	GIT_HOME=/cmd; export GIT_HOME
+		# path
+		PATH=$PATH:$GIT_HOME; export PATH
 
-	# path
-	PATH=$PATH:$GIT_HOME; export PATH
 
-	# alias
-	alias gs='git status'
-	alias gd='git diff --name-only --cached'
-	alias gl='git log --oneline'
-	alias gc='git commit'
-	alias ga='git add'
-	alias gf='git fetch'
-	alias gsc='git log origin/main..HEAD --oneline'	
-
-	# give path preferene to OpenSSH commands, used by Git
-	if test "$OS" = "Windows_NT"
-	then
-		OPENSSH_HOME=/c/Windows/System32/OpenSSH; export OPENSSH_HOME;
-		PATH=$OPENSSH_HOME:$PATH; export PATH
+		# give path preferene to OpenSSH commands, used by Git
+		if test "$OS" = "Windows_NT"
+		then
+			OPENSSH_HOME=/c/Windows/System32/OpenSSH; export OPENSSH_HOME;
+			PATH=$OPENSSH_HOME:$PATH; export PATH
+		fi
 	fi
 fi
+
+# Note: On macOS, we've given path preference to using 'brew' commands over default in path settings
+
+# alias - provide the git aliases regardless of where installed
+alias gs='git status'
+alias gd='git diff --name-only --cached'
+alias gl='git log --oneline'
+alias gc='git commit'
+alias ga='git add'
+alias gf='git fetch'
+alias gsc='git log origin/main..HEAD --oneline'	
+
 
 
 #--------------------------------------------------------------------------
