@@ -304,13 +304,9 @@ then
 		# path
 		PATH=$PATH:$GIT_HOME; export PATH
 
-
 		# give path preferene to OpenSSH commands, used by Git
-		if test "$OS" = "Windows_NT"
-		then
-			OPENSSH_HOME=/c/Windows/System32/OpenSSH; export OPENSSH_HOME;
-			PATH=$OPENSSH_HOME:$PATH; export PATH
-		fi
+		OPENSSH_HOME=/c/Windows/System32/OpenSSH; export OPENSSH_HOME;
+		PATH=$OPENSSH_HOME:$PATH; export PATH
 	fi
 fi
 
