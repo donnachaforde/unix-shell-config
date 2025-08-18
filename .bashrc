@@ -79,24 +79,31 @@ echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
 
 # show the OS type in a banner
+if test "$OS" = "Windows_NT"
+then
+	# use cygwin banner.exe command, even from GitBash
+	if test -f $OPT_HOME/cygwin64/bin/banner
+	then
+		$OPT_HOME/cygwin64/bin/banner Windows
+	fi
+fi
+
+
 if test "$OS" = "Darwin"
 then
-	# use '$ brew install figlet'
-	if test -f /usr/local/bin/figlet
+	# 'banner' cmd on macOS displays on its side so favour 'figlet' ( '$ brew install figlet'
+	if test -f /opt/homebrew/bin/figlet
 	then
-		# 'banner' cmd on macOS displays on its side so favour 'figlet'
-		/usr/local/bin/figlet macOS
+		
+		/opt/homebrew/bin/figlet macOS
 	fi
-else
+fi
+
+if test "$OS" = "Linux" 
+then
 	if test -f /usr/bin/banner
 	then
 		banner $OS
-	else
-		# on windows, we can use the optional cygwin banner.exe command, even from GitBash
-		if test -f $OPT_HOME/cygwin64/bin/banner
-		then
-			$OPT_HOME/cygwin64/bin/banner Windows
-		fi
 	fi
 fi
 
