@@ -227,7 +227,7 @@ if test "$OS" = "Darwin"
 then
 	# give preference to 'brew' commands
 	BREW_HOME=/opt/homebrew; export BREW_HOME
-	PATH=$BREW_HOME/bin:$PATH; export PATH
+	PATH=./:$BREW_HOME/bin:$PATH; export PATH
 
 
 	# ensure we can launch VS Code from command line
