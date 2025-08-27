@@ -2,7 +2,7 @@
 #
 # .bashrc - Bash Shell environment settings
 #
-# Copyright © 2001 - 2024 Donnacha Forde. All rights reserved.
+# Copyright © 2001 - 2025 Donnacha Forde. All rights reserved.
 #
 # This software is provided 'as is' without warranty, expressed or implied.
 # Donnacha Forde accepts no responsibility for its use or reliability.
@@ -236,7 +236,6 @@ then
 	BREW_HOME=/opt/homebrew; export BREW_HOME
 	PATH=./:$BREW_HOME/bin:$PATH; export PATH
 
-
 	# ensure we can launch VS Code from command line
 	if [ -d /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin ]; then
 		VSCODE_HOME=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin; export VSCODE_HOME
@@ -368,9 +367,6 @@ if [ -d $OPT_HOME/java ]; then
 
 	# man
 	MANPATH=$MANPATH:$JAVA_HOME/man; export MANPATH
-
-	# alias
-	# N/A
 fi
 
 
@@ -400,7 +396,6 @@ if [ -d $OPT_HOME/maven ]; then
 
 	# alias
 	alias mci='mvn clean install'
-
 fi
 
 
@@ -420,9 +415,6 @@ if [ -d $OPT_HOME/grpc ]; then
 
 	# man
 	MANPATH=$MANPATH:$GRPC_HOME/man; export MANPATH
-
-	# alias
-
 fi
 
 
@@ -438,7 +430,8 @@ if [ -d $OPT_HOME/CMake ]; then
 	PATH=$PATH:$CMAKE_HOME/bin; export PATH
 
 	# alias
-	alias cm cmake
+	alias cm=cmake
+fi
 
 fi
 
@@ -453,7 +446,6 @@ if [ -d $OPT_HOME/Go ]; then
 
 	# path
 	PATH=$PATH:$GOLANG_HOME/bin; export PATH
-
 fi
 
 
