@@ -433,6 +433,20 @@ if [ -d $OPT_HOME/CMake ]; then
 	alias cm=cmake
 fi
 
+# On macOS, the app install goes in the Applications folder
+if test "$OS" = "Darwin"
+then
+	if [ -d /Applications/CMake.app ]; then
+
+		# home
+		CMAKE_HOME=/Applications/CMake.app/Contents; export CMAKE_HOME
+
+		# path
+		PATH=$PATH:$CMAKE_HOME/bin; export PATH
+
+		# alias
+		alias cm=cmake
+	fi
 fi
 
 
