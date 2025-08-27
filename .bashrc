@@ -298,9 +298,9 @@ if [ -d $XTERM_HOME ]; then
 	alias xwin="xterm -sb -sl 999 -fg white -bg black -fn arial "
 
 	# source X display
-	if test -f ~/.bashrc.display
+	if test -f ~/.display.bashrc
 	then
-		. ~/.bashrc.display
+		. ~/.display.bashrc
 	fi
 fi
 
@@ -484,9 +484,9 @@ fi
 #--------------------------------------------------------------------------
 # source aliases
 
-if test -f ~/.bashrc.alias
+if test -f ~/.alias.bashrc
 then
-	. ~/.bashrc.alias
+	. ~/.alias.bashrc
 fi
 echo
 
