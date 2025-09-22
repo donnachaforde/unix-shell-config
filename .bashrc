@@ -352,6 +352,47 @@ alias gf='git fetch'
 alias gsc='git log origin/main..HEAD --oneline'	
 alias gsh='git show --show-signature'
 
+#
+# show the current git branch in the prompt if in a git repo
+#
+
+#source /usr/share/git/completion/git-prompt.sh
+source /opt/homebrew/etc/bash_completion.d/git-prompt.sh 
+
+# uncomment the lines below to show git branch in prompt
+GIT_PS1_SHOWDIRTYSTATE=1
+#GIT_PS1_SHOWSTASHSTATE=1
+#GIT_PS1_SHOWUNTRACKEDFILES=1
+#GIT_PS1_SHOWUPSTREAM="auto"
+
+# some basic ways to set the prompt with git branch info
+# PS1="$PS1"'`__git_ps1 "(%s)"`'
+# GIT_PROMPT=$(__git_ps1 "(%s)")
+# PS1="$GIT_PROMPT $PS1"
+
+#
+# This function will change the prompt when you're in a valid git branch.
+# It will show the branch name and path, but not username/host.
+# When not in a git repo, it will show username/host and path.
+# 
+# Note: This function requires 'git-prompt.sh' to be sourced above.
+# Note: This works the same as though you had set PS1 directly. (e.g. # PS1="$PS1"'`__git_ps1 "(%s)"`')
+#
+function my_git_prompt() {
+    # Check if we are in a Git repository
+    local git_status=$(__git_ps1 "(%s)")
+
+    if [ -n "$git_status" ]; then
+        # If in a repo, show Git status and path, but not username/host
+        PS1="$git_status\[\e[34m\]\w\[\e[m\]\$ "
+    else
+        # If not in a repo, show username, host, and path
+        PS1='\[\e[32m\]\u@\h:\[\e[34m\]\w\[\e[m\]\$ '
+    fi
+}
+
+# Tell Bash to execute this function before each command
+PROMPT_COMMAND=my_git_prompt
 
 
 #--------------------------------------------------------------------------
