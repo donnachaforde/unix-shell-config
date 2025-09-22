@@ -73,6 +73,17 @@ fi
 
 
 #--------------------------------------------------------------------------
+# terminal history settings - ensure we have a large history
+#
+# Note: on Windows, Git Bash defaults to 500 so we increase it here
+# Note: on macOS, the default is 5000 so we increase it here
+# Note: on Linux, the default is 1000 so we increase it here
+
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+
+
+#--------------------------------------------------------------------------
 # display details of the current host
 
 echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
@@ -240,7 +251,10 @@ then
 	if [ -d /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin ]; then
 		VSCODE_HOME=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin; export VSCODE_HOME
 		PATH=$PATH:$VSCODE_HOME; export PATH
-	fi	
+	fi
+
+	# include access to our own scripts
+	PATH=$PATH:~/views/scripts; export PATH
 fi
 
 
@@ -374,6 +388,7 @@ fi
 #--------------------------------------------------------------------------
 # Maven 
 
+# Note: On macOS, brew installs mvn into brew path
 if [ -d $OPT_HOME/maven ]; then
 
 	# home
@@ -394,9 +409,14 @@ if [ -d $OPT_HOME/maven ]; then
 	# man
 	MANPATH=$MANPATH:$MVN_HOME/man; export MANPATH
 
-	# alias
-	alias mci='mvn clean install'
 fi
+
+# alias
+alias mci='mvn clean install'
+alias mvd='mvn dependency:tree'
+alias mvp='mvn package'
+alias mvr='mvn spring-boot:run'
+
 
 
 #--------------------------------------------------------------------------
@@ -449,6 +469,19 @@ then
 	fi
 fi
 
+# aliases
+alias cmk=cmake
+alias cmkg='cmake -S ./src -B ./build -DCMAKE_BUILD_TYPE=Debug'
+alias cmkb='cmake --build ./build --clean-first --config Debug'
+alias cmkbv='cmake --build ./build --verbose --clean-first --config Debug'
+alias cmkc='cmake --build ./build --verbose --target clean'
+
+alias cmkt='ctest --test-dir ./build'
+alias cmktv='ctest --test-dir ./build --rerun-failed --output-on-failure'
+
+alias cmki='cmake --install ./build --prefix ./install'
+alias cmkir='sudo cmake --install ./build --config Release'
+alias cmku='cmake --build ./build --target uninstall'
 
 #--------------------------------------------------------------------------
 # Golang
