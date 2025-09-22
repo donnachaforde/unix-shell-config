@@ -340,6 +340,7 @@ then
 fi
 
 # Note: On macOS, we've given path preference to using 'brew' commands over default in path settings
+# so we'll pick up the 'brew' installed git.
 
 # alias - provide the git aliases regardless of where installed
 alias gs='git status'
@@ -349,6 +350,7 @@ alias gc='git commit'
 alias ga='git add'
 alias gf='git fetch'
 alias gsc='git log origin/main..HEAD --oneline'	
+alias gsh='git show --show-signature'
 
 
 
