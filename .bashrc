@@ -343,7 +343,7 @@ fi
 # so we'll pick up the 'brew' installed git.
 
 # alias - provide the git aliases regardless of where installed
-alias gs='git status'
+alias gs='git status -s'
 alias gd='git diff --name-only --cached'
 alias gl='git log --oneline'
 alias gc='git commit'
