@@ -384,7 +384,8 @@ function my_git_prompt() {
 
     if [ -n "$git_status" ]; then
         # If in a repo, show Git status and path, but not username/host
-        PS1="$git_status\[\e[34m\]\w\[\e[m\]\$ "
+		git_status=$(__git_ps1 "\[\e[35m\](%s)\[\e[m\]")
+        PS1="$git_status\n\[\e[34m\]\w\[\e[m\]\$ "
     else
         # If not in a repo, show username, host, and path
         PS1='\[\e[32m\]\u@\h:\[\e[34m\]\w\[\e[m\]\$ '
@@ -393,6 +394,38 @@ function my_git_prompt() {
 
 # Tell Bash to execute this function before each command
 PROMPT_COMMAND=my_git_prompt
+
+
+#
+# source git autocomplete 
+#
+
+# On Linux, if git installed via package manager, the completion script is in /usr/share/git/completion
+if test "$OS" = "Linux"
+then
+	if test -f /usr/share/git/completion/git-completion.bash
+	then
+		. /usr/share/git/completion/git-completion.bash
+	fi
+fi	
+
+# On Windows, if git installed via GitBash, the completion script is in the home directory (manually downloaded)
+if test "$OS" = "Windows_NT"
+then
+	if test -f ~/.git-completion.bash
+	then
+		. ~/.git-completion.bash
+	fi
+fi
+
+# On macOS, if git installed via brew, it's in /opt/homebrew/etc/bash_completion.d/git-completion.bash
+if test "$OS" = "Darwin"
+then
+	if test -f /opt/homebrew/etc/bash_completion.d/git-completion.bash
+	then
+		. /opt/homebrew/etc/bash_completion.d/git-completion.bash
+	fi
+fi
 
 
 #--------------------------------------------------------------------------
@@ -567,14 +600,7 @@ fi
 echo
 
 
-#--------------------------------------------------------------------------
-# source git autocomplete 
 
-if test -f ~/.git-completion.bash
-then
-	. ~/.git-completion.bash
-fi
-echo
 
 #--------------------------------------------------------------------------
 # Display shell version, date & time
