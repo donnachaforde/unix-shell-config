@@ -86,7 +86,11 @@ export HISTFILESIZE=20000
 echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
 echo
 
+#
 # show the OS type in a banner
+#
+
+# on Windows, we can use the cygwin banner command (even from GitBash)
 if test "$OS" = "Windows_NT"
 then
 	# use cygwin banner.exe command, even from GitBash
@@ -96,15 +100,16 @@ then
 	fi
 fi
 
+# on macOS, 'banner' cmd on macOS displays on its side so favour 'figlet'  ('brew install figlet')
 if test "$OS" = "Darwin"
 then
-	# 'banner' cmd on macOS displays on its side so favour 'figlet' ( '$ brew install figlet'
 	if test -f /opt/homebrew/bin/figlet
 	then
 		/opt/homebrew/bin/figlet macOS
 	fi
 fi
 
+# on Linux, we can use the banner command
 if test "$OS" = "Linux" 
 then
 	if test -f /usr/bin/banner
