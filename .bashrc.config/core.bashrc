@@ -2,7 +2,7 @@
 #
 # core.bashrc - Core bash shell environment settings
 #
-# Copyright © 2001 - 2025 Donnacha Forde. All rights reserved.
+# Copyright © 2001 - 2026 Donnacha Forde. All rights reserved.
 #
 # This software is provided 'as is' without warranty, expressed or implied.
 # Donnacha Forde accepts no responsibility for its use or reliability.
