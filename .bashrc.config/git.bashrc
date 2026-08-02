@@ -35,6 +35,10 @@ fi
 # Note: On macOS, we've given path preference to using 'brew' commands over default in path settings
 # so we'll pick up the 'brew' installed git.
 
+
+#--------------------------------------------------------------------------
+# aliases
+
 # alias - provide the git aliases regardless of where installed
 alias gs='git status -s'
 alias gd='git diff --name-only --cached'
@@ -45,8 +49,9 @@ alias gf='git fetch'
 alias gsc='git log origin/main..HEAD --oneline'
 alias gsh='git show --show-signature'
 
-#
-# show the current git branch in the prompt if in a git repo
+
+#--------------------------------------------------------------------------
+# Git prompt - show the current git branch in the prompt if in a git repo
 #
 
 # source git-prompt based on OS
@@ -101,7 +106,7 @@ function my_git_prompt() {
 PROMPT_COMMAND=my_git_prompt
 
 
-#
+#--------------------------------------------------------------------------
 # source git autocomplete
 #
 

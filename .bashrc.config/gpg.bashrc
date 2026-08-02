@@ -18,8 +18,7 @@ echo "Loading GPG configuration from .bashrc.config/gpg.bashrc"
 # set up gpg on macOS
 if test "$OS" = "Darwin"
 then
-# if the gpg command is exists in the home brew directory
-
+	# if the gpg command is exists in the home brew directory
 	if [ -f $BREW_HOME/bin/gpg ]; then
 
 		echo "Setting up GPG for macOS..."
