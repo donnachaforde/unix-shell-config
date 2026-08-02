@@ -22,46 +22,9 @@ This directory contains modular bash configuration files that can be selectively
 └── README.md             - This documentation
 ```
 
-## How It Works
+## Module Reference
 
-The main `~/.bashrc` file now sources config files selectively:
-
-```bash
-# Always sourced (core shell functionality)
-source ~/.bashrc.config/core.bashrc
-source ~/.bashrc.config/prompt.bashrc
-
-# Optional - uncomment as needed
-source ~/.bashrc.config/git.bashrc        # Recommended for developers
-# source ~/.bashrc.config/java.bashrc      # For Java/Maven projects
-# source ~/.bashrc.config/cmake.bashrc     # For CMake/C/C++ projects
-# source ~/.bashrc.config/grpc.bashrc      # For gRPC development
-# etc...
-```
-
-## Recommended Configuration
-
-For most developers, enable these by default:
-- `core.bashrc` - Always needed
-- `aliases.bashrc` - General productivity aliases
-- `git.bashrc` - Git integration and aliases
-
-Then enable technology-specific configs as needed for your current project.
-```bash
-source ~/.bashrc
-```
-
-### Disable a Configuration
-
-Simply comment out the relevant lines in `~/.bashrc`.
-
-## Benefits
-
-- **Cleaner main `.bashrc`**: Keep the main configuration file lightweight and manageable
-- **Selective loading**: Only load what you need for your current project/task
-- **Easier maintenance**: Update individual tool configurations without affecting others
-- **Version control**: Track changes to specific tools independently
-- **Portability**: Share specific configs across machines or projects
+The files in this directory are meant to be sourced selectively from your main Bash startup entrypoint. For the integration workflow and the project-level overview, see the top-level [README.md](../README.md).
 
 ## Configuration Details
 
@@ -86,19 +49,19 @@ Git configuration and integration:
 - Git bash completion (Linux, macOS, Windows)
 - Platform-specific git paths
 
-### x-display.bashrc
-X11 display and terminal configuration:
-- Xterm aliases: `xt`, `xtx`, `xwin`
-- X11 paths and libraries
-- Display settings sourcing
-- **Note**: May be redundant on modern desktop environments with Wayland
-
 ### aliases.bashrc
 General purpose aliases for everyday tasks:
 - Directory navigation (`ls`, `ll`, `la`)
 - Colored output for `grep`, `diff`, `df`, `du`
 - DOS command emulation for Windows users
 - Typo correction for `cd` command
+
+### x-display.bashrc
+X11 display and terminal configuration:
+- Xterm aliases: `xt`, `xtx`, `xwin`
+- X11 paths and libraries
+- Display settings sourcing
+- **Note**: May be redundant on modern desktop environments with Wayland
 
 ### java.bashrc
 Java and Maven development environment:
@@ -130,45 +93,6 @@ PostgreSQL configuration:
 #### python.bashrc
 Python configuration:
 - Python binary paths (macOS via Homebrew)
-
-## Platform Support
-
-All configurations support multiple platforms:
-- Linux
-- macOS
-- Windows (Git Bash, Cygwin, MinGw)
-- Unix variants (Solaris, HP-UX, AIX)
-
-Platform-specific paths and settings are automatically detected and applied.
-
-## Migration from Previous Versions
-
-If you're upgrading from earlier versions:
-
-1. The new `.bashrc` maintains backward compatibility
-2. Core settings are automatically loaded
-3. General aliases and Git are now recommended to always enable
-4. Technology-specific configs are individually selectable
-5. The old `dev-tools.bashrc` has been split into individual files
-6. X11 configuration is now optional (may be redundant on modern systems)
-
-## Customization
-
-You can:
-- Create new config files for additional tools
-- Source them conditionally in `~/.bashrc`
-- Combine multiple configs by sourcing them together
-- Override settings by sourcing configs in a specific order
-
-Example: Creating a new `.bashrc.config/nodejs.bashrc`:
-
-```bash
-# Add to ~/.bashrc:
-if test -f ~/.bashrc.config/nodejs.bashrc
-then
-	. ~/.bashrc.config/nodejs.bashrc
-fi
-```
 
 ## Tips
 
