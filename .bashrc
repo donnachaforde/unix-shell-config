@@ -19,11 +19,11 @@ then
 	. ~/.bashrc.config/core.bashrc
 fi
 
-# Prompt settings and window title behavior - comment out if you want to keep the default prompt
-if test -f ~/.bashrc.config/prompt.bashrc
-then
-	. ~/.bashrc.config/prompt.bashrc
-fi
+# Prompt settings and window title behavior - uncomment if you want to override the default prompt
+#if test -f ~/.bashrc.config/prompt.bashrc
+#then
+#	. ~/.bashrc.config/prompt.bashrc
+#fi
 
 # General aliases (recommended to always enable)
 if test -f ~/.bashrc.config/aliases.bashrc
