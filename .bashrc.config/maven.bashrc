@@ -1,5 +1,7 @@
+#--------------------------------------------------------------------------
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
+#--------------------------------------------------------------------------
 
 echo "Loading Maven configuration from .bashrc.config/maven.bashrc"
 
@@ -27,7 +29,6 @@ if [ -d $OPT_HOME/maven ]; then
 
 	# man
 	MANPATH=$MANPATH:$MVN_HOME/man; export MANPATH
-
 fi
 
 

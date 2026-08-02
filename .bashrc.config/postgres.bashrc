@@ -1,5 +1,7 @@
+#--------------------------------------------------------------------------
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
+#--------------------------------------------------------------------------
 
 echo "Loading PostgreSQL configuration from .bashrc.config/postgres.bashrc"
 
@@ -14,7 +16,10 @@ then
 		PATH=$PATH:$BREW_HOME/opt/libpq/bin; export PATH
 	fi
 
-#	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BREW_HOME/opt/libpq/lib; export LD_LIBRARY_PATH
-#	LDFLAGS="-L$BREW_HOME/opt/libpq/lib"; export LDFLAGS
-#	CPPFLAGS="-I$BREW_HOME/opt/libpq/include"; export CPPFLAGS
+	# lib path settings for postgres
+	LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BREW_HOME/opt/libpq/lib; export LD_LIBRARY_PATH
+	LDFLAGS="-L$BREW_HOME/opt/libpq/lib"; export LDFLAGS
+	
+	# path for postgres headers
+	CPPFLAGS="-I$BREW_HOME/opt/libpq/include"; export CPPFLAGS
 fi

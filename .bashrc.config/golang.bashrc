@@ -1,11 +1,13 @@
+#--------------------------------------------------------------------------
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
+#--------------------------------------------------------------------------
 
 echo "Loading Golang configuration from .bashrc.config/golang.bashrc"
 
 
 #--------------------------------------------------------------------------
-# Golang
+# Golang env settings
 
 if [ -d $OPT_HOME/Go ]; then
 

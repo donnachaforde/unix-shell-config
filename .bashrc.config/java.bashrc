@@ -1,5 +1,7 @@
+#--------------------------------------------------------------------------
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
+#--------------------------------------------------------------------------
 
 echo "Loading Java configuration from .bashrc.config/java.bashrc"
 

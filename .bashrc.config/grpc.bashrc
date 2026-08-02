@@ -1,11 +1,13 @@
+#--------------------------------------------------------------------------
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
+#--------------------------------------------------------------------------
 
 echo "Loading gRPC configuration from .bashrc.config/grpc.bashrc"
 
 
 #--------------------------------------------------------------------------
-# gRPC
+# gRPC settings
 
 if [ -d $OPT_HOME/grpc ]; then
 

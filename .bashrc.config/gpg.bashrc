@@ -1,11 +1,13 @@
+#--------------------------------------------------------------------------
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
+#--------------------------------------------------------------------------
 
 echo "Loading GPG configuration from .bashrc.config/gpg.bashrc"
 
 
 #--------------------------------------------------------------------------
-# gpg
+# gpg env integration
 
 # set up gpg on macOS
 if test "$OS" = "Darwin"
