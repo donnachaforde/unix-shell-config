@@ -9,8 +9,12 @@
 # Different bash implementations have different setting syntax so we adjust
 # by platform, etc.
 #
+# Shared design goal: keep the override prompt consistent across Bash on
+# Ubuntu/Linux, macOS, and Windows Git Bash, using a common user@host:dir$
+# shape with only minimal platform-specific escape handling.
 
-# Ubuntu-style prompt support on Linux and Debian-based systems
+# Ubuntu-style prompt support on Linux and Debian-based systems.
+# This branch is only active when this module is sourced by your shell entrypoint.
 if test "$OS" = "Linux"
 then
 	# set variable identifying the chroot you are in (used in the prompt below)
@@ -57,23 +61,31 @@ then
 fi
 
 
-# Windows - The Git Bash prompt on Windows is good enough so only uncomment if really necessary
+# Windows Git Bash - keep the same user@host:dir$ shape as the other platforms.
+# Historical alternative kept for reference:
+#   sets the terminal title to the current working directory and applies a
+#   green/yellow path color style; useful if you want the older Git Bash look back.
+# PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 if test "$OS" = "Windows_NT"
 then
-    #PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
+    PS1='\u@\h:\w\$ '
 fi
 
-# cygwin - Note: cygwin is not an xterm so it doesn't support 'title'
+# cygwin - keep the same base shape, but preserve its own ANSI title handling.
+# Historical alternative kept for reference:
+#   sets the terminal title to the current working directory and applies a
+#   green/yellow path color style; useful if you want the older Cygwin look back.
+# PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 if test "$MACHINE" = "Cygwin"
 then
- 	PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
+ 	PS1='\u@\h:\w\$ '
 fi
 
 
-# MacOS - basic prompt is good enough so only uncomment block below if really necessary
+# macOS - align with the shared user@host:dir$ form used elsewhere.
 if test "$OS" = "Darwin"
 then
-	#PS1="\u@\h \w$ "
+	PS1="\u@\h:\w\$ "
 fi
 
 
