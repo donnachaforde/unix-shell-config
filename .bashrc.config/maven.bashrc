@@ -14,6 +14,8 @@ if [ -d $OPT_HOME/maven ]; then
 
 	# home
 	MVN_HOME=$OPT_HOME/maven; export MVN_HOME
+	M2_HOME=$MVN_HOME; export M2_HOME
+	M2_REPO=${M2_REPO:-$HOME/.m2/repository}; export M2_REPO
 
 	# opts
 	if test "$MVN_OPTS" = ""

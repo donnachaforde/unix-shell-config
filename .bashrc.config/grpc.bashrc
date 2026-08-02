@@ -19,6 +19,7 @@ if [ -d $OPT_HOME/grpc ]; then
 
 	# libs
 	LIBPATH=$LIBPATH:$GRPC_HOME/lib; export LIBPATH
+	PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}:$GRPC_HOME/lib/pkgconfig; export PKG_CONFIG_PATH
 
 	# man
 	MANPATH=$MANPATH:$GRPC_HOME/man; export MANPATH

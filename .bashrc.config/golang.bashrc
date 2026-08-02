@@ -13,7 +13,10 @@ if [ -d $OPT_HOME/Go ]; then
 
 	# home
 	GOLANG_HOME=$OPT_HOME/Go; export GOLANG_HOME
+	GOROOT=$GOLANG_HOME; export GOROOT
+	GOPATH=${GOPATH:-$HOME/go}; export GOPATH
+	GOBIN=$GOPATH/bin; export GOBIN
 
 	# path
-	PATH=$PATH:$GOLANG_HOME/bin; export PATH
+	PATH=$PATH:$GOROOT/bin:$GOBIN; export PATH
 fi

@@ -13,6 +13,7 @@ if [ -d $OPT_HOME/java ]; then
 
 	# home
 	JAVA_HOME=$OPT_HOME/java; export JAVA_HOME
+	JRE_HOME=$JAVA_HOME; export JRE_HOME
 
 	# add any extra optional settings
 	if test "$JAVA_OPTS" = ""
