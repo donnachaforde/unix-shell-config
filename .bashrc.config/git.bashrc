@@ -1,5 +1,7 @@
+#--------------------------------------------------------------------------
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
+#--------------------------------------------------------------------------
 
 echo "Loading Git configuration from .bashrc.config/git.bashrc"
 
@@ -73,28 +75,28 @@ GIT_PS1_SHOWDIRTYSTATE=1
 # PS1="$GIT_PROMPT $PS1"
 
 #
-# This function will change the prompt when you're in a valid git branch.
-# It will show the branch name and path, but not username/host.
-# When not in a git repo, it will show username/host and path.
+# Keep the base prompt as the authoritative prompt source.
+# Git should only decorate the existing prompt with branch information when
+# the current working directory is inside a Git repository.
 #
 # Note: This function requires 'git-prompt.sh' to be sourced above.
-# Note: This works the same as though you had set PS1 directly. (e.g. # PS1="$PS1"'`__git_ps1 "(%s)"`')
 #
+GIT_PROMPT_BASE="$PS1"
+
 function my_git_prompt() {
-    # Check if we are in a Git repository
-    local git_status=$(__git_ps1 "(%s)")
+    local git_status
+
+    git_status=$(__git_ps1 "\[\e[35m\](%s)\[\e[m\]")
 
     if [ -n "$git_status" ]; then
-        # If in a repo, show Git status and path, but not username/host
-		git_status=$(__git_ps1 "\[\e[35m\](%s)\[\e[m\]")
-        PS1="$git_status\n\[\e[34m\]\w\[\e[m\]\$ "
+        PS1="$git_status\n$GIT_PROMPT_BASE"
     else
-        # If not in a repo, show username, host, and path
-        PS1='\[\e[32m\]\u@\h:\[\e[34m\]\w\[\e[m\]\$ '
+        PS1="$GIT_PROMPT_BASE"
     fi
 }
 
-# Tell Bash to execute this function before each command
+# Tell Bash to execute this function before each command.
+# It preserves the platform's base prompt and only adds the Git branch marker.
 PROMPT_COMMAND=my_git_prompt
 
 
