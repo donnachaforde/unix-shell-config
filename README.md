@@ -4,10 +4,12 @@
 Useful Bash profile and config settings for the Bourne Again Shell
 
 ## Usage
-Copy or replace your `bashrc` with the version from this repo. 
+Use this repository as a Bash startup profile for your home account. Copy the standard Bash entrypoint files into your home directory, or merge the contents of this repo into your existing shell setup so that `.bashrc` remains the main interactive startup file and `.bash_profile` / `.profile` continue to delegate into it.
+
+The modular settings are stored under `.bashrc.config`, so you can enable or disable optional tool-specific behavior by uncommenting the corresponding source block in `.bashrc` and starting a new shell session to reload the configuration.
 
 ## Contents
-
+The contents of the repo are divided into two groupings, as follows:
 
 ### Standard Account Shell Configuration Files
 
@@ -22,7 +24,7 @@ File|Description|Comment|
 
 
 ### Optional Configuration Settings
-The `bashrc` file can pull in the following optional configurations, which are all located under the `.bashrc.config` directory. 
+The `bashrc` file can pull in the following optional configurations, which are all located under the `.bashrc.config` directory. These are the partitioned settings that extend the standard Bash startup files with additional environment support for specific tools and workflows.
 
 File|Description|Comment|
 |---|---|---|
