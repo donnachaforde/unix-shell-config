@@ -30,7 +30,8 @@ The `bashrc` file can pull in the following optional configurations, which are a
 
 File|Description|Comment|
 |---|---|---|
-|core.bashrc| Core shell settings. | Handles OS detection, history, prompt, paths, and general shell defaults. |
+|core.bashrc| Core shell settings. | Handles OS detection, history, paths, and general shell defaults. |
+|prompt.bashrc| Prompt and window title settings. | Handles platform-specific prompt styling and shell title behavior. |
 |aliases.bashrc| General aliases. | Provides common alias definitions for everyday shell use. |
 |git.bashrc| Git configuration and aliases. | Adds Git-related aliases and prompt integration. |
 |x-display.bashrc| Optional X11 display configuration. | Used for X forwarding and display-related shell setup. (Note: This setting is necessary when accessing a UNIX host via an emulator.)|

@@ -6,7 +6,8 @@ This directory contains modular bash configuration files that can be selectively
 
 ```
 .bashrc.config/
-├── core.bashrc           - Core shell settings (OS detection, history, prompt, paths)
+├── core.bashrc           - Core shell settings (OS detection, history, paths)
+├── prompt.bashrc         - Prompt and window title settings
 ├── aliases.bashrc        - General aliases (recommended)
 ├── git.bashrc            - Git configuration and aliases (recommended)
 ├── x-display.bashrc      - X11 display configuration (optional)
@@ -28,6 +29,7 @@ The main `~/.bashrc` file now sources config files selectively:
 ```bash
 # Always sourced (core shell functionality)
 source ~/.bashrc.config/core.bashrc
+source ~/.bashrc.config/prompt.bashrc
 
 # Optional - uncomment as needed
 source ~/.bashrc.config/git.bashrc        # Recommended for developers
@@ -67,10 +69,15 @@ Simply comment out the relevant lines in `~/.bashrc`.
 Contains essential shell functionality that's always active:
 - OS and host detection (Linux, macOS, Windows, etc.)
 - Terminal history settings
-- Prompt configuration (platform-specific)
 - System paths (for all platforms)
 - Library and man page paths
 - Console colors and dircolors setup
+
+### prompt.bashrc
+Contains prompt and window title behavior:
+- Platform-specific prompt strings (Linux, macOS, Windows, Cygwin, AIX, HP-UX, SunOS)
+- Window title handling via escape sequences
+- Root versus normal-user prompt styling on Solaris variants
 
 ### git.bashrc
 Git configuration and integration:

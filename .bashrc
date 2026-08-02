@@ -13,10 +13,16 @@ echo
 # Core Configuration
 #
 
-# Core settings: OS detection, history, prompt, paths, git integration
+# Core settings: OS detection, history, paths, git integration
 if test -f ~/.bashrc.config/core.bashrc
 then
 	. ~/.bashrc.config/core.bashrc
+fi
+
+# Prompt settings and window title behavior
+if test -f ~/.bashrc.config/prompt.bashrc
+then
+	. ~/.bashrc.config/prompt.bashrc
 fi
 
 # General aliases (recommended to always enable)
