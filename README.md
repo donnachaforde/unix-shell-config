@@ -31,7 +31,7 @@ File|Description|Comment|
 |core.bashrc| Core shell settings. | Handles OS detection, history, prompt, paths, and general shell defaults. |
 |aliases.bashrc| General aliases. | Provides common alias definitions for everyday shell use. |
 |git.bashrc| Git configuration and aliases. | Adds Git-related aliases and prompt integration. |
-|x-display.bashrc| Optional X11 display configuration. | Used for X forwarding and display-related shell setup. |
+|x-display.bashrc| Optional X11 display configuration. | Used for X forwarding and display-related shell setup. (Note: This setting is necessary when accessing a UNIX host via an emulator.)|
 |java.bashrc| Java/Maven configuration. | Adds Java and Maven-related environment settings. |
 |cmake.bashrc| CMake/C/C++ configuration. | Adds CMake and C/C++ development tooling support. |
 |grpc.bashrc| gRPC configuration. | Provides environment paths and settings for gRPC work. |
@@ -39,5 +39,9 @@ File|Description|Comment|
 |gpg.bashrc| GPG configuration. | Provides GPG-related shell settings. |
 |postgres.bashrc| PostgreSQL configuration. | Adds PostgreSQL tooling path configuration. |
 |python.bashrc| Python configuration. | Adds Python environment path configuration. |
+
+## Notes
+
+* Shell settings for older shells such as C Shell, TC Shell and Korn Shell have been archived and are still available in the `archive-alternative-shells` branch of the GitHub repository.
 
 
