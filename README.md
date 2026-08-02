@@ -32,7 +32,8 @@ File|Description|Comment|
 |aliases.bashrc| General aliases. | Provides common alias definitions for everyday shell use. |
 |git.bashrc| Git configuration and aliases. | Adds Git-related aliases and prompt integration. |
 |x-display.bashrc| Optional X11 display configuration. | Used for X forwarding and display-related shell setup. (Note: This setting is necessary when accessing a UNIX host via an emulator.)|
-|java.bashrc| Java/Maven configuration. | Adds Java and Maven-related environment settings. |
+|java.bashrc| Java configuration. | Adds Java environment settings and tooling paths. |
+|maven.bashrc| Maven configuration. | Adds Maven environment settings and command aliases. |
 |cmake.bashrc| CMake/C/C++ configuration. | Adds CMake and C/C++ development tooling support. |
 |grpc.bashrc| gRPC configuration. | Provides environment paths and settings for gRPC work. |
 |golang.bashrc| Go configuration. | Adds Go toolchain path support. |

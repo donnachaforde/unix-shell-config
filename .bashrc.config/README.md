@@ -10,7 +10,8 @@ This directory contains modular bash configuration files that can be selectively
 ├── aliases.bashrc        - General aliases (recommended)
 ├── git.bashrc            - Git configuration and aliases (recommended)
 ├── x-display.bashrc      - X11 display configuration (optional)
-├── java.bashrc           - Java and Maven configuration
+├── java.bashrc           - Java configuration
+├── maven.bashrc          - Maven configuration and aliases
 ├── cmake.bashrc          - CMake and C/C++ development tools
 ├── grpc.bashrc           - gRPC configuration
 ├── golang.bashrc         - Golang configuration

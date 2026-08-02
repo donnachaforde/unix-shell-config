@@ -52,11 +52,18 @@ fi
 #	. ~/.bashrc.config/x-display.bashrc
 #fi
 
-# Java and Maven development
-# Uncomment the following line if you're working with Java/Maven projects
+# Java development
+# Uncomment the following line if you're working with Java projects
 #if test -f ~/.bashrc.config/java.bashrc
 #then
 #	. ~/.bashrc.config/java.bashrc
+#fi
+
+# Maven development
+# Uncomment the following line if you're working with Maven projects
+#if test -f ~/.bashrc.config/maven.bashrc
+#then
+#	. ~/.bashrc.config/maven.bashrc
 #fi
 
 # CMake and C/C++ development

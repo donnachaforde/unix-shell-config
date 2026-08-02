@@ -1,6 +1,6 @@
 #--------------------------------------------------------------------------
 #
-# java.bashrc - Java and Maven configuration
+# java.bashrc - Java configuration
 #
 # Copyright © 2001 - 2026 Donnacha Forde. All rights reserved.
 #
@@ -9,11 +9,11 @@
 #
 #--------------------------------------------------------------------------
 
-echo "Loading Java/Maven configuration from .bashrc.config/java.bashrc"
+echo "Loading Java configuration from .bashrc.config/java.bashrc"
 
 
 #--------------------------------------------------------------------------
-# Java 
+# Java environment
 
 if [ -d $OPT_HOME/java ]; then	
 
@@ -43,36 +43,3 @@ if [ -d $OPT_HOME/java ]; then
 	MANPATH=$MANPATH:$JAVA_HOME/man; export MANPATH
 fi
 
-
-
-#--------------------------------------------------------------------------
-# Maven 
-
-# Note: On macOS, brew installs mvn into brew path
-if [ -d $OPT_HOME/maven ]; then
-
-	# home
-	MVN_HOME=$OPT_HOME/maven; export MVN_HOME
-
-	# opts
-	if test "$MVN_OPTS" = ""
-	then
-		MVN_OPTS=; export MVN_OPTS
-	fi
-
-	# path
-	PATH=$PATH:$MVN_HOME/bin; export PATH
-
-	# libs
-	LIBPATH=$LIBPATH:$MVN_HOME/lib; export LIBPATH
-
-	# man
-	MANPATH=$MANPATH:$MVN_HOME/man; export MANPATH
-
-fi
-
-# alias
-alias mci='mvn clean install'
-alias mvd='mvn dependency:tree'
-alias mvp='mvn package'
-alias mvr='mvn spring-boot:run'
