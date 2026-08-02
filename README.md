@@ -8,6 +8,8 @@ Use this repository as a Bash startup profile for your home account. Copy the st
 
 The modular settings are stored under `.bashrc.config`, so you can enable or disable optional tool-specific behavior by uncommenting the corresponding source block in `.bashrc` and starting a new shell session to reload the configuration.
 
+This repository is released under the MIT license. The full text is included in the root `LICENSE` file.
+
 ## Contents
 The contents of the repo are divided into two groupings, as follows:
 
@@ -46,5 +48,7 @@ File|Description|Comment|
 * The design is intentionally extendable: new shell-specific modules can be added under the `.bashrc.config` directory and sourced from `.bashrc` as needed. 
 
 * The repo is now Bash-only focused. Shell settings for older shells such as C Shell, TC Shell and Korn Shell have been archived and are still available in the `archive-alternative-shells` branch of the GitHub repository.
+
+* The project uses SPDX-style file headers and a root-level `LICENSE` file for the repository-wide MIT licensing terms.
 
 
