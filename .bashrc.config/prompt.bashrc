@@ -65,20 +65,20 @@ fi
 # Historical alternative kept for reference:
 #   sets the terminal title to the current working directory and applies a
 #   green/yellow path color style; useful if you want the older Git Bash look back.
-# PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 if test "$OS" = "Windows_NT"
 then
     PS1='\u@\h:\w\$ '
+    #PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 fi
 
 # cygwin - keep the same base shape, but preserve its own ANSI title handling.
 # Historical alternative kept for reference:
 #   sets the terminal title to the current working directory and applies a
 #   green/yellow path color style; useful if you want the older Cygwin look back.
-# PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 if test "$MACHINE" = "Cygwin"
 then
  	PS1='\u@\h:\w\$ '
+    #PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 fi
 
 
