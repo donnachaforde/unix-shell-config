@@ -25,7 +25,7 @@ This repository is released under the MIT license. The full text is included in 
 
 This repo is designed to be integrated into an existing Bash profile rather than replacing it wholesale.
 
-If you already have a mature Ubuntu `.bashrc` (or another existing shell startup file), keep that file as the primary entrypoint and add a small source block to pull in the repo's modular settings. The files under `.bashrc.config` use absolute paths such as `~/.bashrc.config/core.bashrc`, so the directory must live in your home account.
+If you already have a mature `.bashrc` (or existing shell startup file), keep that file as the primary entrypoint and add a small source block to pull in the repo's modular settings. The files under `.bashrc.config` use absolute paths such as `~/.bashrc.config/core.bashrc`, so the directory must live in your home account.
 
 A typical integration pattern looks like this:
 
@@ -45,7 +45,7 @@ fi
 #fi
 ```
 
-This lets you preserve the default Ubuntu startup behavior while layering in the repo's reusable core settings, aliases, and optional tool-specific modules.
+This lets you preserve the default startup behavior while layering in the repo's reusable core settings, aliases, and optional tool-specific modules.
 
 ## Recommended Configuration
 
