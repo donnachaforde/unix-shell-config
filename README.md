@@ -42,6 +42,8 @@ File|Description|Comment|
 
 ## Notes
 
-* Shell settings for older shells such as C Shell, TC Shell and Korn Shell have been archived and are still available in the `archive-alternative-shells` branch of the GitHub repository.
+* The design is intentionally extendable: new shell-specific modules can be added under the `.bashrc.config` directory and sourced from `.bashrc` as needed. 
+
+* The repo is now Bash-only focused. Shell settings for older shells such as C Shell, TC Shell and Korn Shell have been archived and are still available in the `archive-alternative-shells` branch of the GitHub repository.
 
 
