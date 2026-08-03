@@ -1,15 +1,9 @@
 #--------------------------------------------------------------------------
-#
-# ~/.bashrc.alias (sourced by ~/.bashrc and ~./kshrc)
-#
-# Copyright © 2001 - 2024 Donnacha Forde. All rights reserved.
-#
-# This software is provided 'as is' without warranty, expressed or implied.
-# Donnacha Forde accepts no responsibility for its use or reliability.
-#
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2001-2026 Donnacha Forde
 #--------------------------------------------------------------------------
 
-echo "Sourcing aliases from ~/.bashrc.alias"
+echo "Sourcing aliases from .bashrc.config/aliases.bashrc"
 
 OS=${OS:-`uname`}
 
@@ -41,7 +35,7 @@ alias du='du -h'
 
 
 # interactive mode for the safety conscious
-#alias rm='rm-i'
+#alias rm='rm -i'
 #alias cp='cp -i'
 #alias mv='mv -i'
 
@@ -59,6 +53,7 @@ alias tn=telnet
 alias cls=clear
 alias md=mkdir
 alias rd=rmdir
+
 if test "$OS" = "Windows_NT"
 then
 	# mks env only
@@ -71,5 +66,3 @@ fi
 alias cd..='cd ..'
 alias cd.='cd .'
 alias cd-='cd -'
-
-

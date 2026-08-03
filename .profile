@@ -3,5 +3,5 @@
 #
 
 # set shell environment
-#. ~/.bashrc
+. ~/.bashrc
 
