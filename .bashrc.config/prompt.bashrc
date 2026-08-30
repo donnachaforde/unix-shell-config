@@ -82,10 +82,11 @@ then
 fi
 
 
-# macOS - align with the shared user@host:dir$ form used elsewhere.
+# macOS - align with the shared user@host:dir$ form used elsewhere, with the
+# green user@host / blue path coloring this prompt has always had.
 if test "$OS" = "Darwin"
 then
-	PS1="\u@\h:\w\$ "
+	PS1="\[\e[32m\]\u@\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]\$ "
 fi
 
 
