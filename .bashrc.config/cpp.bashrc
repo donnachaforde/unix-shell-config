@@ -53,7 +53,8 @@ then
 
 	# MinGW/MSYS2 toolchain (gcc/g++ for Windows) - alternative to MSVC
 	if [ -d $OPT_HOME/msys64 ]; then
-		PATH=$PATH:$OPT_HOME/msys64/usr/bin:$OPT_HOME/msys64/mingw64/bin
+		MSYS2_HOME=$OPT_HOME/msys64; export MSYS2_HOME
+		PATH=$PATH:$MSYS2_HOME/usr/bin:$MSYS2_HOME/mingw64/bin
 		export PATH
 
 		# Perl is needed by some MinGW C/C++ builds (e.g. OpenSSL)
@@ -63,11 +64,13 @@ then
 
 	# ninja and nasm - common companions to either toolchain above
 	if [ -d $OPT_HOME/ninja ]; then
-		PATH=$PATH:$OPT_HOME/ninja; export PATH
+		NINJA_HOME=$OPT_HOME/ninja; export NINJA_HOME
+		PATH=$PATH:$NINJA_HOME; export PATH
 	fi
 
 	if [ -d $OPT_HOME/nasm ]; then
-		PATH=$PATH:$OPT_HOME/nasm; export PATH
+		NASM_HOME=$OPT_HOME/nasm; export NASM_HOME
+		PATH=$PATH:$NASM_HOME; export PATH
 	fi
 fi
 
