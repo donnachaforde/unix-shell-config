@@ -19,6 +19,13 @@ then
 	. ~/.bashrc.config/core.bashrc
 fi
 
+# Login banner: host details, OS banner/figlet art, shell version, date/time
+# Comment out for quieter/faster shell startup (e.g. non-interactive subshells)
+if test -f ~/.bashrc.config/motd.bashrc
+then
+	. ~/.bashrc.config/motd.bashrc
+fi
+
 # Prompt settings and window title behavior - uncomment if you want to override the default prompt
 #if test -f ~/.bashrc.config/prompt.bashrc
 #then
@@ -52,6 +59,12 @@ fi
 #	. ~/.bashrc.config/x-display.bashrc
 #fi
 
+# Cygwin configuration (optional - only if you're actually working in a Cygwin shell)
+#if test -f ~/.bashrc.config/cygwin.bashrc
+#then
+#	. ~/.bashrc.config/cygwin.bashrc
+#fi
+
 # Java development
 # Uncomment the following line if you're working with Java projects
 #if test -f ~/.bashrc.config/java.bashrc
@@ -71,6 +84,13 @@ fi
 #if test -f ~/.bashrc.config/cmake.bashrc
 #then
 #	. ~/.bashrc.config/cmake.bashrc
+#fi
+
+# C++ toolchain (compiler discovery, vcpkg, ccache, debugger/format aliases)
+# Uncomment the following line if you're doing C/C++ development (not tied to CMake)
+#if test -f ~/.bashrc.config/cpp.bashrc
+#then
+#	. ~/.bashrc.config/cpp.bashrc
 #fi
 
 # Individual development tools (uncomment as needed)
