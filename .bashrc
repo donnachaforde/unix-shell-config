@@ -90,6 +90,12 @@ fi
 
 # Individual development tools
 
+# Beyond Compare CLI
+#if test -f ~/.bashrc.config/beyondcompare.bashrc
+#then
+#	. ~/.bashrc.config/beyondcompare.bashrc
+#fi
+
 # gRPC development
 #if test -f ~/.bashrc.config/grpc.bashrc
 #then

@@ -93,16 +93,20 @@ The `bashrc` file can pull in the following optional configurations, which are a
 File|Description|Comment|
 |---|---|---|
 |core.bashrc| Core shell settings. | Handles OS detection, history, paths, and general shell defaults. |
+|motd.bashrc| Login banner. | Displays host details, OS banner/figlet art, shell version, and date/time. |
 |prompt.bashrc| Prompt and window title settings. | Handles platform-specific prompt styling and shell title behavior. |
 |aliases.bashrc| General aliases. | Provides common alias definitions for everyday shell use. |
 |git.bashrc| Git configuration and aliases. | Adds Git-related aliases and prompt integration. |
 |x-display.bashrc| Optional X11 display configuration. | Used for X forwarding and display-related shell setup. (Note: This setting is necessary when accessing a UNIX host via an emulator.)|
+|cygwin.bashrc| Cygwin configuration. | Console colours and `CYGWIN_HOME` setup - only needed when working in a Cygwin shell. |
 |java.bashrc| Java configuration. | Adds Java environment settings and tooling paths. |
 |maven.bashrc| Maven configuration. | Adds Maven environment settings and command aliases. |
 |cmake.bashrc| CMake/C/C++ configuration. | Adds CMake and C/C++ development tooling support. |
+|cpp.bashrc| C++ toolchain configuration. | Compiler discovery (MSVC/MinGW/LLVM), `vcvars` bridge, vcpkg, ccache, debugger/format aliases - independent of CMake. |
 |grpc.bashrc| gRPC configuration. | Provides environment paths and settings for gRPC work. |
 |golang.bashrc| Go configuration. | Adds Go toolchain path support. |
 |rust.bashrc| Rust configuration. | Sources the Cargo environment (`~/.cargo/env`) and sets `CARGO_HOME`. |
+|beyondcompare.bashrc| Beyond Compare CLI. | Adds the `bcomp` CLI to the path on macOS. |
 |gpg.bashrc| GPG configuration. | Provides GPG-related shell settings. |
 |postgres.bashrc| PostgreSQL configuration. | Adds PostgreSQL tooling path configuration. |
 |python.bashrc| Python configuration. | Adds Python environment path configuration. |
