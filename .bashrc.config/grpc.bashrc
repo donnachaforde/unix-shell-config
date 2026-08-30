@@ -3,7 +3,7 @@
 # Copyright (c) 2001-2026 Donnacha Forde
 #--------------------------------------------------------------------------
 
-echo "Loading gRPC configuration from .bashrc.config/grpc.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED grpc"
 
 
 #--------------------------------------------------------------------------

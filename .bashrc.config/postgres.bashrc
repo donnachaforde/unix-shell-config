@@ -3,7 +3,7 @@
 # Copyright (c) 2001-2026 Donnacha Forde
 #--------------------------------------------------------------------------
 
-echo "Loading PostgreSQL configuration from .bashrc.config/postgres.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED postgres"
 
 
 #--------------------------------------------------------------------------

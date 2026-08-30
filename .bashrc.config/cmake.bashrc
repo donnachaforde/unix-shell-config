@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
 
-echo "Loading CMake configuration from .bashrc.config/cmake.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED cmake"
 
 
 #--------------------------------------------------------------------------

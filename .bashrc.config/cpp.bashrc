@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
 
-echo "Loading C++ development configuration from .bashrc.config/cpp.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED cpp"
 
 
 #--------------------------------------------------------------------------
