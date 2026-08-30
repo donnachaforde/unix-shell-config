@@ -1,9 +1,6 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
 
-echo "Loading core shell settings from .bashrc.config/core.bashrc"
-
-
 #--------------------------------------------------------------------------
 # display host details
 

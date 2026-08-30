@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
 
-echo "Loading Beyond Compare configuration from .bashrc.config/beyondcompare.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED beyondcompare"
 
 
 #--------------------------------------------------------------------------

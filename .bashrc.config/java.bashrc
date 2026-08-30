@@ -3,7 +3,7 @@
 # Copyright (c) 2001-2026 Donnacha Forde
 #--------------------------------------------------------------------------
 
-echo "Loading Java configuration from .bashrc.config/java.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED java"
 
 
 #--------------------------------------------------------------------------

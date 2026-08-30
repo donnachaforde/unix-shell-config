@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
 
-echo "Loading Cygwin configuration from .bashrc.config/cygwin.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED cygwin"
 
 
 #--------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 # Copyright (c) 2001-2026 Donnacha Forde
 #--------------------------------------------------------------------------
 
-echo "Loading Maven configuration from .bashrc.config/maven.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED maven"
 
 
 #--------------------------------------------------------------------------

@@ -1,21 +1,12 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
 
-echo "Loading login banner from .bashrc.config/motd.bashrc"
-
 
 #--------------------------------------------------------------------------
-# display details of the current host
+# OS banner art
 #
-# Note: relies on OS, MACHINE, USERID, HOSTNAME and OPT_HOME already being
-# set by core.bashrc, so this must be sourced after it.
-
-echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
-echo
-
-#
-# show the OS type in a banner
-#
+# Note: relies on OS and OPT_HOME already being set by core.bashrc, so this
+# must be sourced after it.
 
 # on Windows, we can use the cygwin banner command (even from GitBash)
 if test "$OS" = "Windows_NT"
@@ -47,22 +38,22 @@ fi
 
 
 #--------------------------------------------------------------------------
-# Display shell version, date & time
+# host details, shell version, date & time
 #
+# Note: relies on USERID, HOSTNAME and MACHINE already being set by
+# core.bashrc. $BASH_VERSION is the actual running shell's version - unlike
+# shelling out to a hardcoded path like /bin/bash, it can't go stale if the
+# shell you're actually running isn't the one at that fixed location.
 
-if test -f /bin/bash
+echo "Logged on as "$'\033[1;32m'"$USERID"$'\033[0m'" on "$HOSTNAME" running "$OS" on "$MACHINE""
+
+# green if this is a reasonably modern bash, red as a nudge if it's an old/stock one
+if [ "${BASH_VERSINFO[0]}" -ge 5 ]
 then
-	echo
-	/bin/bash --version
-	echo
+	echo "bash "$'\033[1;32m'"$BASH_VERSION"$'\033[0m'
 else
-	if test -f /usr/local/bin/bash
-	then
-		echo
-		/usr/local/bin/bash --version
-		echo
-	fi
+	echo "bash "$'\033[1;31m'"$BASH_VERSION"$'\033[0m'" (outdated - consider upgrading)"
 fi
 
-date
 echo
+date

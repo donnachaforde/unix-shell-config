@@ -7,10 +7,12 @@
 # disable, uncomment it to enable.
 #
 
-echo
 echo "Bash Shell"
 echo "Personal settings loaded from ~/.bashrc"
-echo
+
+# Tracks which modules actually sourced below, for the summary line at the
+# end - each module appends its own short name to this as it loads.
+BASHRC_LOADED=
 
 
 #--------------------------------------------------------------------------
@@ -133,4 +135,6 @@ fi
 #fi
 
 
+echo
+echo $'\033[2m'"Loaded:$BASHRC_LOADED"$'\033[0m'
 echo

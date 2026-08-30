@@ -3,7 +3,7 @@
 # Copyright (c) 2001-2026 Donnacha Forde
 #--------------------------------------------------------------------------
 
-echo "Loading Golang configuration from .bashrc.config/golang.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED golang"
 
 
 #--------------------------------------------------------------------------

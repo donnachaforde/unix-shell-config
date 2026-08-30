@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
 
-echo "Loading X11 configuration from .bashrc.config/x-display.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED x-display"
 
 # Set default X display terminal
 DISPLAY=0.0.0.0:0.0; export DISPLAY

@@ -3,7 +3,7 @@
 # Copyright (c) 2001-2026 Donnacha Forde
 #--------------------------------------------------------------------------
 
-echo "Loading Git configuration from .bashrc.config/git.bashrc"
+BASHRC_LOADED="$BASHRC_LOADED git"
 
 
 #--------------------------------------------------------------------------
