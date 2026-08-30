@@ -2,6 +2,10 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2001-2026 Donnacha Forde
 #--------------------------------------------------------------------------
+#
+# Note: each block below is sourced conditionally - comment it out to
+# disable, uncomment it to enable.
+#
 
 echo
 echo "Bash Shell"
@@ -20,19 +24,18 @@ then
 fi
 
 # Login banner: host details, OS banner/figlet art, shell version, date/time
-# Comment out for quieter/faster shell startup (e.g. non-interactive subshells)
 if test -f ~/.bashrc.config/motd.bashrc
 then
 	. ~/.bashrc.config/motd.bashrc
 fi
 
-# Prompt settings and window title behavior - uncomment if you want to override the default prompt
-#if test -f ~/.bashrc.config/prompt.bashrc
-#then
-#	. ~/.bashrc.config/prompt.bashrc
-#fi
+# Prompt settings and window title behavior
+if test -f ~/.bashrc.config/prompt.bashrc
+then
+	. ~/.bashrc.config/prompt.bashrc
+fi
 
-# General aliases (recommended to always enable)
+# General aliases
 if test -f ~/.bashrc.config/aliases.bashrc
 then
 	. ~/.bashrc.config/aliases.bashrc
@@ -42,59 +45,50 @@ fi
 #--------------------------------------------------------------------------
 # Optional Configurations
 #
-#
-# Note: Uncomment to enable tool configurations as needed for your current work
-#
 
-# Git configuration (recommended to always enable for developers)
-if test -f ~/.bashrc.config/git.bashrc
-then
-	. ~/.bashrc.config/git.bashrc
-fi
+# Git configuration
+#if test -f ~/.bashrc.config/git.bashrc
+#then
+#	. ~/.bashrc.config/git.bashrc
+#fi
 
-# X11 display configuration (optional - mainly for remote X forwarding)
-# Uncomment the following line if you need X11/xterm functionality
+# X11 display configuration (mainly for remote X forwarding)
 #if test -f ~/.bashrc.config/x-display.bashrc
 #then
 #	. ~/.bashrc.config/x-display.bashrc
 #fi
 
-# Cygwin configuration (optional - only if you're actually working in a Cygwin shell)
+# Cygwin configuration (only if you're actually working in a Cygwin shell)
 #if test -f ~/.bashrc.config/cygwin.bashrc
 #then
 #	. ~/.bashrc.config/cygwin.bashrc
 #fi
 
 # Java development
-# Uncomment the following line if you're working with Java projects
 #if test -f ~/.bashrc.config/java.bashrc
 #then
 #	. ~/.bashrc.config/java.bashrc
 #fi
 
 # Maven development
-# Uncomment the following line if you're working with Maven projects
 #if test -f ~/.bashrc.config/maven.bashrc
 #then
 #	. ~/.bashrc.config/maven.bashrc
 #fi
 
 # CMake and C/C++ development
-# Uncomment the following line if you're working with CMake/C/C++ projects
 #if test -f ~/.bashrc.config/cmake.bashrc
 #then
 #	. ~/.bashrc.config/cmake.bashrc
 #fi
 
-# C++ toolchain (compiler discovery, vcpkg, ccache, debugger/format aliases)
-# Uncomment the following line if you're doing C/C++ development (not tied to CMake)
+# C++ toolchain: compiler discovery, vcpkg, ccache, debugger/format aliases
 #if test -f ~/.bashrc.config/cpp.bashrc
 #then
 #	. ~/.bashrc.config/cpp.bashrc
 #fi
 
-# Individual development tools (uncomment as needed)
-# Uncomment the following lines for specific technologies you need
+# Individual development tools
 
 # gRPC development
 #if test -f ~/.bashrc.config/grpc.bashrc
