@@ -73,63 +73,6 @@ export HISTFILESIZE=20000
 
 
 #--------------------------------------------------------------------------
-# display details of the current host
-
-echo "Logged on as "$USERID" on "$HOSTNAME" running "$OS" on "$MACHINE""
-echo
-
-#
-# show the OS type in a banner
-#
-
-# on Windows, we can use the cygwin banner command (even from GitBash)
-if test "$OS" = "Windows_NT"
-then
-	# use cygwin banner.exe command, even from GitBash
-	if test -f $OPT_HOME/cygwin64/bin/banner
-	then
-		$OPT_HOME/cygwin64/bin/banner Windows
-	fi
-fi
-
-# on macOS, 'banner' cmd on macOS displays on its side so favour 'figlet'  ('brew install figlet')
-if test "$OS" = "Darwin"
-then
-	if test -f /opt/homebrew/bin/figlet
-	then
-		/opt/homebrew/bin/figlet macOS
-	fi
-fi
-
-# on Linux, we can use the banner command
-if test "$OS" = "Linux" 
-then
-	if test -f /usr/bin/banner
-	then
-		banner $OS
-	fi
-fi
-
-
-#--------------------------------------------------------------------------
-# environment settings
-
-# console colours - extra step needed for CygWin but Git Bash default is good enough
-
-# augment if on Cygwin
-if test "$MACHINE" = "Cygwin"
-then
-	eval `dircolors -b /etc/DIR_COLORS`
-fi
-
-if test "$OS" = "Windows_NT"
-then
-	# alias 'ls' to ensure we see the colours	
-	alias ls='ls --color=auto'		
-fi
-
-
-#--------------------------------------------------------------------------
 # path settings
 
 # add common UNIX/Linux paths 
@@ -144,45 +87,22 @@ then
 	export PATH
 
 	# sysinternal commands
-	PATH=$PATH:$OPT_HOME/sysinternalssuite
-	export PATH
-	
-	# ninja
-	PATH=$PATH:$OPT_HOME/ninja
-	export PATH
-	
-	# nasm
-	PATH=$PATH:$OPT_HOME/nasm
+	SYSINTERNALS_HOME=$OPT_HOME/sysinternalssuite; export SYSINTERNALS_HOME
+	PATH=$PATH:$SYSINTERNALS_HOME
 	export PATH
 
 	# launch VS Code from command line
-	PATH=$PATH:~/AppData/Local/Programs/Microsoft\ VS\ Code/bin
+	VSCODE_HOME=~/AppData/Local/Programs/Microsoft\ VS\ Code/bin; export VSCODE_HOME
+	PATH=$PATH:$VSCODE_HOME
 	export PATH
-
-	# add VS dev tools (like dumpbin.exe) 
-	VS_HOME=/c/Program\ Files/Microsoft\ Visual\ Studio/2022/Professional
-	export VS_HOME; 
-	PATH=$PATH:$VS_HOME/Common7/IDE:$VS_HOME/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64
-	export PATH	
-
-	# add other unix binaries to the cmd line (sourced from msys/mingw)
-	PATH=$PATH:$OPT_HOME/msys64/usr/bin:$OPT_HOME/msys64/mingw64/bin
-	export PATH	
-
-	# add PERL location for MinGW
-	PATH=$PATH:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
-	export PATH	
-
-	# cygwin - we can optional add extra paths to cygwin executables (but may require some care...)
-	CYGWIN_HOME=$OPT_HOME/cygwin64
-	export CYGWIN_HOME
-	#PATH=$PATH:$CYGWIN_HOME/bin:$CYGWIN_HOME/sbin:$CYGWIN_HOME/usr:$CYGWIN_HOME:/usr/sbin
-	#export PATH
 fi
 
 # Configure paths for macOS
 if test "$OS" = "Darwin"
 then
+	# suppress "the default interactive shell is now zsh" warning on every bash startup
+	export BASH_SILENCE_DEPRECATION_WARNING=1
+
 	# give preference to 'brew' commands
 	BREW_HOME=/opt/homebrew; export BREW_HOME
 	PATH=./:$BREW_HOME/bin:$PATH; export PATH
@@ -223,25 +143,3 @@ if test "$OS" = "SunOS"
 then
 	MANPATH=$MANPATH:/opt/SUNWspro/man; export MANPATH
 fi
-
-
-#--------------------------------------------------------------------------
-# Display shell version, date & time
-#
-
-if test -f /bin/bash
-then
-	echo 
-	/bin/bash --version
-	echo
-else 
-	if test -f /usr/local/bin/bash
-	then
-		echo 
-		/usr/local/bin/bash --version
-		echo
-	fi
-fi
-
-date
-echo
