@@ -102,6 +102,7 @@ File|Description|Comment|
 |cmake.bashrc| CMake/C/C++ configuration. | Adds CMake and C/C++ development tooling support. |
 |grpc.bashrc| gRPC configuration. | Provides environment paths and settings for gRPC work. |
 |golang.bashrc| Go configuration. | Adds Go toolchain path support. |
+|rust.bashrc| Rust configuration. | Sources the Cargo environment (`~/.cargo/env`) and sets `CARGO_HOME`. |
 |gpg.bashrc| GPG configuration. | Provides GPG-related shell settings. |
 |postgres.bashrc| PostgreSQL configuration. | Adds PostgreSQL tooling path configuration. |
 |python.bashrc| Python configuration. | Adds Python environment path configuration. |

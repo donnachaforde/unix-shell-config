@@ -102,6 +102,12 @@ fi
 #	. ~/.bashrc.config/golang.bashrc
 #fi
 
+# Rust development
+#if test -f ~/.bashrc.config/rust.bashrc
+#then
+#	. ~/.bashrc.config/rust.bashrc
+#fi
+
 # GPG configuration
 #if test -f ~/.bashrc.config/gpg.bashrc
 #then
