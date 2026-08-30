@@ -61,23 +61,23 @@ then
 fi
 
 
-# Windows Git Bash - keep the same user@host:dir$ shape as the other platforms.
+# Windows Git Bash - same green user@host / blue path coloring as the other platforms.
 # Historical alternative kept for reference:
 #   sets the terminal title to the current working directory and applies a
 #   green/yellow path color style; useful if you want the older Git Bash look back.
 if test "$OS" = "Windows_NT"
 then
-    PS1='\u@\h:\w\$ '
+    PS1="\[\e[32m\]\u@\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]\$ "
     #PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 fi
 
-# cygwin - keep the same base shape, but preserve its own ANSI title handling.
+# cygwin - same green/blue coloring, but preserve its own ANSI title handling.
 # Historical alternative kept for reference:
 #   sets the terminal title to the current working directory and applies a
 #   green/yellow path color style; useful if you want the older Cygwin look back.
 if test "$MACHINE" = "Cygwin"
 then
- 	PS1='\u@\h:\w\$ '
+ 	PS1="\[\e[32m\]\u@\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]\$ "
     #PS1='\[\033]1;\w\007\033[32m\033[33m\w\033[0m\]$ '
 fi
 
